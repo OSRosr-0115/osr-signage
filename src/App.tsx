@@ -15,12 +15,12 @@ export default function App() {
   const LINE_URL = "https://lin.ee/9p0u2gO";
   const TEL_URL = "tel:048-633-4952";
   const サービス画像 = [
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image14",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image11",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image13",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image10",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image9",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image8",
+    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E6%8F%90%E6%A1%88",
+    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E7%8F%BE%E8%AA%BF",
+    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E6%90%AC%E5%85%A5",
+    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E5%8F%96%E4%BB%98",
+    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E5%88%B6%E4%BD%9C",
+    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E9%81%8B%E7%94%A8%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88",
     ];
   const 製品画像 = [
     "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image15",
@@ -1098,7 +1098,7 @@ display: none;
           <img
             src={サービス画像[index]}
             alt={item.title}
-            className="service-icon"
+            className="service-image"
           />
 
           <div className="number">
@@ -1536,12 +1536,12 @@ const 翻訳 = {
             "設置場所の寸法・電源・通寸環境・設置条件などを確信し、安全かつスムーズに導入できる施工プランを検討します。",
         },
         {
-          title: "搬入・設置",
+          title: "機器搬入・設置準備",
           text:
             "重量物の搬入・据付で培った現場対応力を活かし、機器の搬入から設置まで安全かつ確実に対応します。",
         },
         {
-          title: "取付・設置工事",
+          title: "取付・施工",
           text:
             "設置場所や使用環境に合わせて、壁掛け・スタンド設置をはじめとした各種取付工事に対応します。現地の状況や安全性を確認したうえで、見た目や使いやすさにも配慮し、適切な方法で丁寧に設置を行います。",
         },
