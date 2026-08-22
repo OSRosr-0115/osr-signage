@@ -230,3 +230,75 @@ body {
   font-family: 'Share Tech Mono', monospace;
   animation: flicker 6s ease-in-out infinite;
 }
+.flow-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 12px;
+}
+
+.flow-text {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #666;
+}
+.business-links {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.business-link-card {
+  display: block;
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  text-decoration: none;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.business-link-card:hover {
+  transform: translateY(-4px);
+  border-color: #00ffe7;
+}
+
+.business-link-en {
+  color: #00ffe7;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  margin-bottom: 12px;
+}
+
+.business-link-card h3 {
+  font-size: 24px;
+  margin: 0 0 12px;
+}
+
+.business-link-card p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 20px;
+}
+
+.business-link-card span {
+  font-size: 14px;
+  font-weight: 700;
+  color: #00ffe7;
+}
+
+@media (max-width: 768px) {
+  .business-links {
+    grid-template-columns: 1fr；
+  }
+}
+.business-link-image {
+  width: 100%;
+  heigt: 220px;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 24px;
+}

@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import renovationImage from "./renovation.png";
+import heavyLiftingImage from "./heavy-lifting.png"
+
+import { useState } from "react";
 
 type Language = "ja" | "en" | "zh" | "vi";
 
@@ -27,15 +30,15 @@ export default function App() {
     "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image19",
     "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image19",
     ];
-  const 活用シーン画像 = [
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image29",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image28",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image22",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image23",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image27",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image24",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image26",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image25",
+  const 導入シーン画像 = [
+    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E5%BA%97%E8%88%97",
+    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E9%A3%B2%E9%A3%9F%E5%BA%97",
+    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E5%95%86%E6%A5%AD%E6%96%BD%E8%A8%AD",
+    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E3%82%AA%E3%83%95%E3%82%A3%E3%82%B9",
+    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%9B%E3%83%86%E3%83%AB",
+    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88",
+    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E3%82%B7%E3%83%A7%E3%83%BC%E3%83%AB%E3%83%BC%E3%83%A0",
+    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E5%B1%8B%E5%A4%96%E5%BA%83%E5%91%8A",
     ];
     
 
@@ -427,10 +430,21 @@ export default function App() {
           margin-top: 50px;
         }
 
-        .scene-card {
-          min-height: 190px;
-          padding: 24px;
-          display: flex;
+.scene-card {
+  min-height: 430px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: 1px solid rgba(0,255,231,.12);
+  background:
+    linear-gradient(
+      135deg,
+      #0c131b,
+      #05070b
+    );
+}
+      
           flex-direction: column;
           justify-content: flex-end;
           border: 1px solid rgba(0,255,231,.12);
@@ -445,9 +459,21 @@ export default function App() {
         width: 100%;
         height: 160px;
         object-fit: cover;
-        margin-bottom: 18px;
-        border: 1px solid rgba(0,255,231,.16);
+        margin-bottom: 14px;
         }
+        .scene-title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.scene-text {
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(255,255,255,.75);
+}
+        
 
         .scene-title {
           font-size: 20px;
@@ -976,6 +1002,7 @@ display: none;
             <ナビボタン text={文言.nav.products} onClick={() => 移動("products")} />
             <ナビボタン text={文言.nav.strength} onClick={() => 移動("strength")} />
             <ナビボタン text={文言.nav.flow} onClick={() => 移動("flow")} />
+            <ナビボタン text={文言.nav.business} onClick={() => 移動("business")} />
             <ナビボタン text={文言.nav.company} onClick={() => 移動("company")} />
 
             <button
@@ -1090,33 +1117,40 @@ display: none;
     </div>
   </div>
 </section>
-        {/* 活用シーン */}
-        <section id="scene" className="section">
-          <div className="inner">
-            <見出し
-              en="SCENE"
-              title={文言.scene.title}
-              description={文言.scene.description}
-            />
 
-            <div className="scene-grid">
-              {文言.scene.items.map((item, index) => (
-                <div className="scene-card" key={index}>
-                  <img
-                    src={活用シーン画像[index]}
-                    alt={item}
-                    className="scene-image"
-                    />
-                  <div className="number">
-                    0{index + 1}
-                  </div>
+   {/* 導入シーン */}
+<section id="scene" className="section">
+  <div className="inner">
+    <見出し
+      en="SCENE"
+      title={文言.scene.title}
+      description={文言.scene.description}
+    />
 
-                  <div className="scene-title">
-                    {item}
-                  </div>
-                </div>
-              ))}
-            </div>
+    <div className="scene-grid">
+      {文言.scene.items.map((item, index) => (
+        <div className="scene-card" key={index}>
+          <img
+            src={導入シーン画像[index]}
+            alt={item.title}
+            className="scene-img"
+          />
+
+          <div className="number">
+            0{index + 1}
+          </div>
+
+          <div className="scene-title">
+            {item.title}
+          </div>
+
+          <div className="scene-text">
+            {item.text}
+          </div>
+        </div>
+      ))}
+    </div>
+    
           </div>
         </section>
 
@@ -1201,13 +1235,67 @@ display: none;
                   </div>
 
                   <div className="flow-title">
-                    {item}
+                    {item.title}
                   </div>
+
+                  <div className="flow-text">
+                  {item.text}
+                </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
+{/* 事業紹介 */}
+<section id="business" className="section">
+  <div className="inner">
+    <見出し
+      en="BUSINESS"
+      title="事業紹介"
+      description="株式会社OSRが展開する事業をご紹介します。"
+    />
+
+    <div className="business-links">
+      <a
+        href="https://na01.safelinks.protection.outlook.com/?url=https%3A%2F%2Frenovation.osr-inc.jp%2F&data=05%7C02%7C%7C0517cd4e91a5459b475708df0005232e%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C639229694196274856%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=h%2Fl4Ux9FCC%2Fux88L97QR4wd0%2F8O6HNmoe3yhrHfghYo%3D&reserved=0"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="business-link-card"
+      >
+        <img
+          src={renovationImage}
+          alt="リフォーム事業"
+          className="business-link-image"
+          />
+        <div className="business-link-en">RENOVATION</div>
+        <h3>リフォーム事業</h3>
+        <p>
+          原状回復・内装工事・リフォームなど、幅広いご要望に対応します。
+        </p>
+        <span>リフォームHPを見る →</span>
+      </a>
+
+      <a
+        href="https://na01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.osr0115.com%2F&data=05%7C02%7C%7C0517cd4e91a5459b475708df0005232e%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C639229694196300729%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=L2JCij4cgeoKaitDB1btOCh9jiXorRMsri2YoNIVl2Y%3D&reserved=0"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="business-link-card"
+      >
+        <img
+          src={heavyLiftingImage}
+          alt="重量鳶事業"
+          className="business-link-image"
+          />
+        <div className="business-link-en">HEAVY LIFTING</div>
+        <h3>重量鳶事業</h3>
+        <p>
+          重量物の搬入・据付・移設など、確かな技術と施工力で対応します。
+        </p>
+        <span>重量鳶HPを見る →</span>
+      </a>
+    </div>
+  </div>
+</section>
 
         {/* 会社概要 */}
         <section id="company" className="section">
@@ -1223,6 +1311,8 @@ display: none;
               <会社行 label={文言.company.representative} value={文言.company.representativeValue} />
               <会社行 label={文言.company.address} value={文言.company.addressValue} />
               <会社行 label={文言.company.business} value={文言.company.businessValue} />
+              <会社行 label={文言.company.constructionPermit} value={文言.company.constructionPermitValue} />
+              <会社行 label={文言.company.licenseBusiness} value={文言.company.licenseBusinessValue} />
             </div>
           </div>
         </section>
@@ -1266,7 +1356,8 @@ display: none;
             </div>
 
             <div className="footer-signage">
-              DIGITAL SIGNAGE
+              DIGITAL SIGNAGE<br />
+              デジタルサイネージ
             </div>
 
             <div className="copyright">
@@ -1411,10 +1502,11 @@ const 翻訳 = {
   ja: {
     nav: {
       service: "サービス",
-      scene: "活用シーン",
+      scene: "導入シーン",
       products: "製品",
       strength: "OSRの強み",
       flow: "導入フロー",
+      business:"事業紹介",
       company: "会社概要",
       contact: "お問い合わせ",
     },
@@ -1423,7 +1515,7 @@ const 翻訳 = {
       title1: "空間に、",
       title2: "伝わる価値を。",
       description:
-        "デジタルサイネージの企画・導入から、搬入・設置・施工・運用までサポートします。",
+        "企画、機器選定から搬入・設置・施工・コンテンツ制作、導入後の運用サポートまで、デジタルサイネージの導入から運用まで一貫して対応します。。",
       productButton: "製品を見る",
       contactButton: "お問い合わせ",
     },
@@ -1436,86 +1528,110 @@ const 翻訳 = {
         {
           title: "企画・ご提案",
           text:
-            "設置場所や用途、ご予算に合わせて最適なデジタルサイネージをご提案します。",
+            "設置場所・用途・ご予算をヒアリングし、ディスプレイのサイズや設置方法、配信方法まで含めた最適なプランをご提案します。",
         },
         {
           title: "現地調査",
           text:
-            "設置環境や電源、寸法、施工条件などを確認し、導入に必要な条件を整理します。",
+            "設置場所の寸法・電源・通寸環境・設置条件などを確信し、安全かつスムーズに導入できる施工プランを検討します。",
         },
         {
           title: "搬入・設置",
           text:
-            "施工会社としての現場対応力を活かし、安全かつ確実に搬入・設置を行います。",
+            "重量物の搬入・据付で培った現場対応力を活かし、機器の搬入から設置まで安全かつ確実に対応します。",
         },
         {
-          title: "施工",
+          title: "取付・設置工事",
           text:
-            "設置環境に応じて、壁面設置や大型ビジョンなどの施工に対応します。",
+            "設置場所や使用環境に合わせて、壁掛け・スタンド設置をはじめとした各種取付工事に対応します。現地の状況や安全性を確認したうえで、見た目や使いやすさにも配慮し、適切な方法で丁寧に設置を行います。",
         },
         {
           title: "コンテンツ制作",
           text:
-            "静止画や動画など、サイネージで使用するコンテンツ制作にも対応します。",
+            "店舗案件や商品・サービスのPR、企業情報、キャンペーン告知など、目的に合わせた静止画や動画コンテンツの制作にも対応します。サイネージを導入して終わりではなく、実際に伝わる・見てもらえる画面づくりまでサポートします。",
         },
         {
-          title: "保守・メンテナンス",
+          title: "配信・運用サポート",
           text:
-            "導入後も安定して運用できるよう、メンテナンスやサポートを行います。",
+            "導入後のコンテンツ更新や配信設定、スケジュール管理まで、デジタルサイネージの運用をトータルでサポートします。遠隔配信にも対応し、店舗や施設へ足を運ぶことなく、最新の情報へスムーズに更新可能です。設置して終わりではなく、導入後も安心して活用いただける運用体制をご提供します。",
         },
       ],
     },
 
     scene: {
-      title: "活用シーン",
+      title: "導入シーン",
       description:
-        "店舗から大型施設、イベント、屋外広告までさまざまな空間で活用できます。",
+        "店舗・飲食店・商業施設・オフィス・ホテル・イベント会場など、さまざまな場所や用途に合わせて最適なデジタルサイネージをご提案します。情報発信や販促、案内表示、空間演出など、目的に応じた効果的な活用が可能です。",
       items: [
-        "店舗",
-        "飲食店",
-        "商業施設",
-        "オフィス",
-        "ホテル",
-        "イベント会場",
-        "ショールーム",
-        "屋外広告",
+        {
+          title:"店舗",
+          text:"商品・サービスのPRやキャンペーン告知など、店頭・店内での効果的な情報発信に活用します。"
+        },
+        {         
+       title: "飲食店",
+          text:"メニューやおすすめ商品の紹介、キャンペーン・イベント情報などを写真や動画で分かりやすく発信できます。"
+        },
+        {
+          title: "商業施設",
+          text:"フロア案内や店舗情報、イベント・キャンペーン告知・広告配信など、施設のさまざまな情報発信に活用できます。大型ディスプレイやLEDビジョンによる空間演出にも対応します。"
+        },
+        {
+          title:"オフィス",
+          text:"受付・来訪者案内をはじめ、社内のお知らせや業務情報、企業PRなど、さまざまな情報共有に活用できます。エントランスやロビーでは、大型ディスプレイを活用した空間演出にも対応します。"
+        },
+        {
+    title:"ホテル",
+          text:"館内案内や情報施設、レストラン・イベントのご案内など、宿泊されるお客様へさまざまな情報発信に活用できます。エントランスやロビーでは、大型ディスプレイを活用した空間演出にも対応します。"
+        },
+        {
+          title:"イベント・展示会",
+          text:"会場案内やタイムスケジュール、商品・サービスのPR、映像演出など、イベントの目的に合わせた情報発信に活用できます。大型ディスプレイやLEDビジョンを使用した、視認性の高い演出にも対応します。"
+        },
+        {
+          title:"ショールーム",
+          text:"商品・サービスの特徴やブランドの世界観を、映像を通じて分かりやすく伝えることができます。大型ディスプレイや複数画面を活用し、来場者の印象に残る空間づくりにも活用できます。"
+        },
+        {
+          title:"屋外広告",
+          text:"店舗前やビル外壁、商業施設などで、広告やキャンペーン、企業情報を効果的に発信できます。屋外環境に適した高輝度ディスプレイやLEDビジョンを活用し、明るい屋外環境でも見やすく、訴求力の高い情報発信を実現します。"
+        },         
       ],
     },
 
     products: {
       title: "製品",
       description:
-        "設置環境や用途に合わせて、最適なサイネージをご提案します。",
+        "設置場所や用途、ご予算に合わせて、屋内・屋外を問わず最適なデジタルサイネージをご提案します。ディスプレイの種類やサイズ、設置方法まで、お客様のご要望に合わせて幅広く対応します",
       items: [
         {
           title: "屋内LEDビジョン",
           text:
-            "店舗・商業施設・イベント会場など、屋内空間に適した高精細LEDビジョン。",
+            "商業施設・店舗・ショールーム・イベント会場など、屋内での大型表示や空間演出に適したLEDビジョンです。設置スペースや視認距離の合わせてサイズや仕様を選定し、迫力のある映像表現を実現します。",
         },
         {
           title: "屋外LEDビジョン",
           text:
-            "高輝度で視認性に優れ、屋外広告や大型ビジョンに適したモデル。",
+            "ビル外壁・店舗前・商業施設・屋外広告などに適したLEDビジョンです。屋外環境でも見やすい高精度モデルをはじめ、設置場所や用途に合わせたご提案をします。",
         },
         {
           title: "液晶デジタルサイネージ",
           text:
-            "店舗や施設の案内、広告表示など幅広い用途に対応します。",
+            "店舗・オフィス・ホテル・施設など幅広い場所で利用できる液晶タイプのデジタルサイネージです。案内表示や商品のPR、広告、企業情報など、さまざまな用途に合わせてサイズや仕様をご提案します。",
         },
         {
           title: "スタンド型サイネージ",
           text:
-            "店舗入口や受付などに設置しやすい、スタンド型のサイネージ。",
+            "店舗入口・受付・ショールーム・イベント会場など設置しやすい自立型のデジタルサイネージです。工事を最小限に抑えて導入しやすく、商品PRや案内表示、広告など幅広い用途に活用できます。",
         },
         {
           title: "壁掛け型サイネージ",
           text:
-            "壁面を活用して省スペースで設置できるスマートなサイネージ。",
+            "壁面を有効活用できる、省スペースなデジタルサイネージです。店舗・オフィス・施設などの案内表示や広告、情報発信に適しており、設置環境に合わせたサイズや取付方法をご提案します。",
         },
         {
           title: "大型ビジョン",
           text:
-            "商業施設、イベント、屋外広告など大規模な映像演出に対応します。",
+            "商業施設やイベント会場、ビル壁面などへ大型LEDビジョンの導入にも対応。現地調査から機器選定、搬入、設置工事、配信・運用まで一貫して対応します。",
         },
       ],
     },
@@ -1523,27 +1639,27 @@ const 翻訳 = {
     strength: {
       title: "OSRの強み",
       description:
-        "デジタル技術だけではなく、施工会社として培ってきた現場対応力を活かします。",
+        "デジタルサイネージの提案力に加え、施工会社として培ってきた現場対応力がOSRの強みです。機器選定から搬入・設置・施工・導入後の運用まで一貫して対応します。",
       items: [
         {
           title: "施工力",
           text:
-            "現場経験を活かし、設置環境に合わせた安全で確実な施工を行います。",
+            "重量物の搬入・据付をはじめ、さまざまな現場で培った経験を活かし、設置環境や安全性を考慮した確実な施工を行います。",
         },
         {
-          title: "一括対応",
+          title: "一貫対応",
           text:
-            "現地調査、搬入、設置、施工、運用サポートまで一貫して対応します。",
+            "企画・機器選定から現地調査、搬入・設置・施工・コンテンツ制作、配信・運用サポートまで導入に必要な工程を一貫して対応します。",
         },
         {
           title: "提案力",
           text:
-            "用途や設置場所、ご予算に合わせた最適なサイネージをご提案します。",
+            "設置場所・用途・ご予算を踏まえ、ディスプレイの種類やサイズ、設置方法、配信方法まで、お客様に合った導入プランをご提案します。",
         },
         {
           title: "柔軟な対応",
           text:
-            "店舗から大型施設、大型ビジョンまで幅広い案件に対応します。",
+            "店舗への1台導入から、商業施設・オフィス・イベント会場などへの複数台設置、大型LEDビジョンまで、規模や用途に合わせて柔軟に対応します。。",
         },
       ],
     },
@@ -1551,15 +1667,33 @@ const 翻訳 = {
     flow: {
       title: "導入フロー",
       description:
-        "お問い合わせから運用開始まで、分かりやすくサポートします。",
+        "ご相談から機器選定、設置・施工、運用開始までデジタルサイネージの導入を一貫してサポートします。初めて導入されるお客様にも、分かりやすく丁寧にご案内します。",
       items: [
-        "お問い合わせ",
-        "ヒアリング",
-        "現地調査",
-        "ご提案・お見積り",
-        "設置・施工",
-        "運用開始・アフターフォロー",
-      ],
+        {
+          title:"お問い合わせ",
+          text:"まずはお電話・LINE・お問い合わせフォームよりお気軽にご相談ください。導入を検討されている場所や用途、ご希望など、分かる範囲でお聞かせください。"
+        },
+        {
+          title:"ヒアリング",
+          text:"設置場所や用途・ご予算、ご希望のサイズ、表示したいコンテンツや運用方法などを詳しくお伺いし、導入に必要な条件を整理します。"
+        },
+    {   
+      title:"現地調査",
+      text:"必要に応じて現地へ伺い、設置スペースや電源・通信環境、壁面などの取付条件搬入経路を確認します。安全性や施工条件まで確認し、最適な設置方法を検討します。"
+    },
+        {
+          title: "ご提案・お見積り",
+          text:"ヒアリング・現地調査の内容をもとに、ディスプレイの種類やサイズ、設置方法などを選定し、導入プランとお見積りをご提案します。"
+        }, 
+        {
+          title:"搬入・設置工事",
+          text:"機器の搬入から取付・設置工事、配線、表示・動作確認まで丁寧に対応します。施工会社として培ってきた現場対応力を活かし、安全かつ確実に設置します。"
+        },
+        {    
+        title: "運用開始・アフターフォロー",
+          text:"設置完了後は表示内容や配線環境を確認し、運用を開始します。コンテンツの更新や配線設定、スケジュール管理など、導入後の運用についても継続してサポートします。"
+        },
+           ],
     },
 
     company: {
@@ -1571,16 +1705,20 @@ const 翻訳 = {
         "代表取締役　大崎 純",
       address: "所在地",
       addressValue:
-        "〒344-0066 埼玉県春日部市豊町6-1-2",
+        "〒344-0066　埼玉県春日部市豊町6-1-2",
       business: "事業内容",
       businessValue:
-        "重量鳶・リフォーム・デジタルサイネージ事業",
+        "重量物搬入・据付工事/リフォーム事業/デジタルサイネージ事業",
+      constructionPermit:"建設業許可",
+      constructionPermitValue:"埼玉県知事許可(般-8)第79355号",
+      licenseBusiness:"許可業種",
+      licenseBusinessValue:"とび・土工工事業/解体工事業",
     },
 
     contact: {
       title: "お問い合わせ",
       description:
-        "デジタルサイネージの導入について、お気軽にご相談ください。",
+        "まずはお電話・LINE・お問い合わせフォームよりお気軽にご相談ください。導入をご検討されている場所や用途、ご希望など、分かる範囲でお聞かせください。",
       company: "会社名",
       name: "お名前",
       email: "メールアドレス",
