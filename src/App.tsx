@@ -1257,7 +1257,7 @@ display: none;
 
     <div className="business-links">
       <a
-        href="https://na01.safelinks.protection.outlook.com/?url=https%3A%2F%2Frenovation.osr-inc.jp%2F&data=05%7C02%7C%7C0517cd4e91a5459b475708df0005232e%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C639229694196274856%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=h%2Fl4Ux9FCC%2Fux88L97QR4wd0%2F8O6HNmoe3yhrHfghYo%3D&reserved=0"
+        href="https://renovation.osr-inc.jp/"
         target="_blank"
         rel="noopener noreferrer"
         className="business-link-card"
@@ -1276,7 +1276,7 @@ display: none;
       </a>
 
       <a
-        href="https://na01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.osr0115.com%2F&data=05%7C02%7C%7C0517cd4e91a5459b475708df0005232e%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C639229694196300729%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=L2JCij4cgeoKaitDB1btOCh9jiXorRMsri2YoNIVl2Y%3D&reserved=0"
+        href="https://www.osr0115.com"
         target="_blank"
         rel="noopener noreferrer"
         className="business-link-card"
@@ -1327,19 +1327,44 @@ display: none;
             />
 
             <form
-              className="contact-form"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <input className="contact-input" placeholder={文言.contact.company} />
-              <input className="contact-input" placeholder={文言.contact.name} />
-              <input className="contact-input" type="email" placeholder={文言.contact.email} />
-              <input className="contact-input" type="tel" placeholder={文言.contact.phone} />
+  className="contact-form"
+  onSubmit={async (e) => {
+    e.preventDefault();
 
-              <textarea
-                className="contact-input"
-                rows={7}
-                placeholder={文言.contact.message}
-              />
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    const response = await fetch("https://formspree.io/f/mgawovgb", {
+      method: "POST",
+      body: data,
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (response.ok) {
+      form.reset();
+      window.location.href = "/";
+    } else {
+      alert("送信に失敗しました。もう一度お試しください。");
+    }
+  }}
+>
+
+
+            
+              <input className="contact-input" name="company" placeholder={文言.contact.company} />
+<input className="contact-input" name="name" placeholder={文言.contact.name} />
+<input className="contact-input" type="email" name="email" placeholder={文言.contact.email} />
+<input className="contact-input" type="tel" name="phone" placeholder={文言.contact.phone} />
+
+<textarea
+  className="contact-input"
+  name="message"
+  rows={7}
+  placeholder={文言.contact.message}
+/>
+              
 
               <button type="submit" className="submit-button">
                 {文言.contact.submit}
@@ -1523,7 +1548,7 @@ const 翻訳 = {
     service: {
       title: "サービス",
       description:
-        "導入前のご相談から設置・施工、運用後のサポートまで対応します。",
+        "企画・機器選定から搬入・設置・施工・コンテンツ制作、導入後の運用サポートまで、デジタルサイネージの導入から運用まで一貫して対応します。",
       items: [
         {
           title: "企画・ご提案",
@@ -1533,7 +1558,7 @@ const 翻訳 = {
         {
           title: "現地調査",
           text:
-            "設置場所の寸法・電源・通寸環境・設置条件などを確信し、安全かつスムーズに導入できる施工プランを検討します。",
+            "設置場所の寸法・電源・通信環境・設置条件などを確信し、安全かつスムーズに導入できる施工プランを検討します。",
         },
         {
           title: "機器搬入・設置準備",
@@ -1548,7 +1573,7 @@ const 翻訳 = {
         {
           title: "コンテンツ制作",
           text:
-            "店舗案件や商品・サービスのPR、企業情報、キャンペーン告知など、目的に合わせた静止画や動画コンテンツの制作にも対応します。サイネージを導入して終わりではなく、実際に伝わる・見てもらえる画面づくりまでサポートします。",
+            "店舗案内や商品・サービスのPR、企業情報、キャンペーン告知など、目的に合わせた静止画や動画コンテンツの制作にも対応します。サイネージを導入して終わりではなく、実際に伝わる・見てもらえる画面づくりまでサポートします。",
         },
         {
           title: "配信・運用サポート",
@@ -1565,7 +1590,7 @@ const 翻訳 = {
       items: [
         {
           title:"店舗",
-          text:"商品・サービスのPRやキャンペーン告知など、店頭・店内での効果的な情報発信に活用します。"
+          text:"商品・サービスのPRやキャンペーン告知など、店頭・店内での効果的な情報発信に活用できます。"
         },
         {         
        title: "飲食店",
@@ -1577,11 +1602,11 @@ const 翻訳 = {
         },
         {
           title:"オフィス",
-          text:"受付・来訪者案内をはじめ、社内のお知らせや業務情報、企業PRなど、さまざまな情報共有に活用できます。エントランスやロビーでは、大型ディスプレイを活用した空間演出にも対応します。"
+          text:"受付・来訪者案内をはじめ、社内のお知らせや業務情報、企業PRなど、さまざまな情報共有に活用できます。複数の情報をタイムリーに発信し、社内コミュニケーションの効率化にもつなげます。"
         },
         {
     title:"ホテル",
-          text:"館内案内や情報施設、レストラン・イベントのご案内など、宿泊されるお客様へさまざまな情報発信に活用できます。エントランスやロビーでは、大型ディスプレイを活用した空間演出にも対応します。"
+          text:"館内案内や情報施設、レストラン・イベントのご案内など、宿泊されるお客様へのさまざまな情報発信に活用できます。エントランスやロビーでは、大型ディスプレイを活用した空間演出にも対応します。"
         },
         {
           title:"イベント・展示会",
@@ -1601,27 +1626,28 @@ const 翻訳 = {
     products: {
       title: "製品",
       description:
-        "設置場所や用途、ご予算に合わせて、屋内・屋外を問わず最適なデジタルサイネージをご提案します。ディスプレイの種類やサイズ、設置方法まで、お客様のご要望に合わせて幅広く対応します",
+         "設置場所や用途、ご予算に合わせて、屋内・屋外を問わず最適なデジタルサイネージをご提案します。　　ディスプレイの種類やサイズ、設置方法まで、お客様のご要望に合わせて幅広く対応します。",
       items: [
         {
           title: "屋内LEDビジョン",
           text:
-            "商業施設・店舗・ショールーム・イベント会場など、屋内での大型表示や空間演出に適したLEDビジョンです。設置スペースや視認距離の合わせてサイズや仕様を選定し、迫力のある映像表現を実現します。",
+            "商業施設・店舗・ショールーム・イベント会場など、屋内での大型表示や空間演出に適したLEDビジョンです。設置スペースや視認距離に合わせてサイズや仕様を選定し、迫力のある映像表現を実現します。",
         },
+      
         {
           title: "屋外LEDビジョン",
           text:
-            "ビル外壁・店舗前・商業施設・屋外広告などに適したLEDビジョンです。屋外環境でも見やすい高精度モデルをはじめ、設置場所や用途に合わせたご提案をします。",
+            "ビル外壁・店舗前・商業施設・屋外広告などに適したLEDビジョンです。屋外環境でも見やすい高精度モデルをはじめ、設置場所や用途に合わせた仕様をご提案します。",
         },
         {
           title: "液晶デジタルサイネージ",
           text:
-            "店舗・オフィス・ホテル・施設など幅広い場所で利用できる液晶タイプのデジタルサイネージです。案内表示や商品のPR、広告、企業情報など、さまざまな用途に合わせてサイズや仕様をご提案します。",
+            "店舗・オフィス・ホテル・施設など、幅広い場所で利用できる液晶タイプのデジタルサイネージです。案内表示や商品のPR、広告、企業情報など、さまざまな用途に合わせてサイズや仕様をご提案します。",
         },
         {
           title: "スタンド型サイネージ",
           text:
-            "店舗入口・受付・ショールーム・イベント会場など設置しやすい自立型のデジタルサイネージです。工事を最小限に抑えて導入しやすく、商品PRや案内表示、広告など幅広い用途に活用できます。",
+            "店舗入口・受付・ショールーム・イベント会場などに設置しやすい自立型のデジタルサイネージです。工事を最小限に抑えて導入しやすく、商品PRや案内表示、広告など幅広い用途に活用できます。",
         },
         {
           title: "壁掛け型サイネージ",
@@ -1629,9 +1655,9 @@ const 翻訳 = {
             "壁面を有効活用できる、省スペースなデジタルサイネージです。店舗・オフィス・施設などの案内表示や広告、情報発信に適しており、設置環境に合わせたサイズや取付方法をご提案します。",
         },
         {
-          title: "大型ビジョン",
+          title: "大型ビジョン・特殊設置もご相談ください",
           text:
-            "商業施設やイベント会場、ビル壁面などへ大型LEDビジョンの導入にも対応。現地調査から機器選定、搬入、設置工事、配信・運用まで一貫して対応します。",
+            "商業施設やイベント会場、ビル壁面などへの大型LEDビジョンの導入にも対応。現地調査から機器選定、搬入、設置工事、配信・運用まで一貫して対応します。",
         },
       ],
     },
@@ -1639,7 +1665,7 @@ const 翻訳 = {
     strength: {
       title: "OSRの強み",
       description:
-        "デジタルサイネージの提案力に加え、施工会社として培ってきた現場対応力がOSRの強みです。機器選定から搬入・設置・施工・導入後の運用まで一貫して対応します。",
+        "デジタルサイネージの提案力に加え、施工会社として培ってきた現場対応力がOSRの強みです。　　　　　機器選定から搬入・設置・施工・導入後の運用まで一貫して対応します。",
       items: [
         {
           title: "施工力",
@@ -1667,7 +1693,7 @@ const 翻訳 = {
     flow: {
       title: "導入フロー",
       description:
-        "ご相談から機器選定、設置・施工、運用開始までデジタルサイネージの導入を一貫してサポートします。初めて導入されるお客様にも、分かりやすく丁寧にご案内します。",
+        "ご相談から機器選定、設置・施工、運用開始までデジタルサイネージの導入を一貫してサポートします。　初めて導入されるお客様にも、分かりやすく丁寧にご案内します。",
       items: [
         {
           title:"お問い合わせ",
@@ -1675,15 +1701,15 @@ const 翻訳 = {
         },
         {
           title:"ヒアリング",
-          text:"設置場所や用途・ご予算、ご希望のサイズ、表示したいコンテンツや運用方法などを詳しくお伺いし、導入に必要な条件を整理します。"
+          text:"設置場所や用途、ご予算、ご希望のサイズ、表示したいコンテンツや運用方法などを詳しくお伺いし、導入に必要な条件を整理します。"
         },
     {   
       title:"現地調査",
-      text:"必要に応じて現地へ伺い、設置スペースや電源・通信環境、壁面などの取付条件搬入経路を確認します。安全性や施工条件まで確認し、最適な設置方法を検討します。"
+      text:"必要に応じて現地へ伺い、設置スペースや電源・通信環境、壁面などの取付条件、搬入経路を確認します。安全性や施工条件まで確認し、最適な設置方法を検討します。"
     },
         {
           title: "ご提案・お見積り",
-          text:"ヒアリング・現地調査の内容をもとに、ディスプレイの種類やサイズ、設置方法などを選定し、導入プランとお見積りをご提案します。"
+          text:"ヒアリング・現地調査の内容をもとに、ディスプレイの種類やサイズ、設置方法、配信方法などを選定し、導入プランとお見積りをご提案します。"
         }, 
         {
           title:"搬入・設置工事",
@@ -1691,7 +1717,7 @@ const 翻訳 = {
         },
         {    
         title: "運用開始・アフターフォロー",
-          text:"設置完了後は表示内容や配線環境を確認し、運用を開始します。コンテンツの更新や配線設定、スケジュール管理など、導入後の運用についても継続してサポートします。"
+          text:"設置完了後は表示内容や配信環境を確認し、運用を開始します。コンテンツの更新や配信設定、スケジュール管理など、導入後の運用についても継続してサポートします。"
         },
            ],
     },
@@ -1705,7 +1731,7 @@ const 翻訳 = {
         "代表取締役　大崎 純",
       address: "所在地",
       addressValue:
-        "〒344-0066　埼玉県春日部市豊町6-1-2",
+        "〒344-0066　埼玉県春日部市豊町6-1-2MOTOパラダイスビル",
       business: "事業内容",
       businessValue:
         "重量物搬入・据付工事/リフォーム事業/デジタルサイネージ事業",
