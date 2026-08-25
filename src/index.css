@@ -544,3 +544,11 @@ body {
     display: block;
   }
 }
+
+.flow-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 18px;
+}

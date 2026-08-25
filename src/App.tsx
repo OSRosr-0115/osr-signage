@@ -41,7 +41,14 @@ export default function App() {
     "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E3%82%B7%E3%83%A7%E3%83%BC%E3%83%AB%E3%83%BC%E3%83%A0",
     "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E5%B1%8B%E5%A4%96%E5%BA%83%E5%91%8A",
     ];
-    
+    const 導入フロー画像 = [
+      "https://res.cloudinary.com/wngor8ac/image/upload/v1787631144/image0.png",
+      "https://res.cloudinary.com/wngor8ac/image/upload/v1787631188/image1.png",
+      "https://res.cloudinary.com/wngor8ac/image/upload/v1787631234/image4.png",
+      "https://res.cloudinary.com/wngor8ac/image/upload/v1787631224/image3.png",
+      "https://res.cloudinary.com/wngor8ac/image/upload/v1787631234/image4.png",
+      "https://res.cloudinary.com/wngor8ac/image/upload/v1787631242/image5.png",
+      ];
 
   // ==========================================================
 
@@ -1252,6 +1259,11 @@ display: none;
             <div className="flow-grid">
               {文言.flow.items.map((item, index) => (
                 <div className="flow-card" key={index}>
+                  <img
+  src={導入フロー画像[index]}
+  alt={item.title}
+  className="flow-image"
+/>
                   <div className="number">
                     STEP {String(index + 1).padStart(2, "0")}
                   </div>
@@ -1704,7 +1716,7 @@ const 翻訳 = {
         },
         {
           title: "商業施設",
-          text:"フロア案内や店舗情報、イベント・キャンペーン告知・広告配信など、施設のさまざまな情報発信に活用できます。大型ディスプレイやLEDビジョンによる空間演出にも対応します。"
+          text:"フロア案内や店舗情報、イベント・キャンペーン告知・広告配信など、施設内のさまざまな情報発信に活用できます。大型ディスプレイやLEDビジョンによる空間演出にも対応します。"
         },
         {
           title:"オフィス",
