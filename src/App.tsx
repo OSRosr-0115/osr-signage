@@ -11,6 +11,7 @@ export default function App() {
   // ==========================================================
 
   const 動画URL = "https://res.cloudinary.com/wngor8ac/video/upload/f_mp4/株式会社OSR動画PCサイズ.mp4";
+  const スマホ動画URL = "https://res.cloudinary.com/wngor8ac/video/upload/v1787624351/Blue_Neon_Background_Mobile_Video.mp4"
   const ロゴURL = "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/435229df-1a79-4dc2-82df-ed1318396242";
   const LINE_URL = "https://lin.ee/9p0u2gO";
   const TEL_URL = "tel:048-633-4952";
@@ -162,11 +163,26 @@ export default function App() {
           color: #00ffe7;
         }
 
+
         .desktop-nav {
-          display: flex;
-          align-items: center;
-          gap: 17px;
-        }
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.nav-button {
+  border: 0;
+  background: transparent;
+  color: rgba(255,255,255,.78);
+  cursor: pointer;
+  font-size: 11px;
+  letter-spacing: .03em;
+  padding: 8px 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
 
         .nav-button {
           border: 0;
@@ -1003,6 +1019,8 @@ display: none;
             <ナビボタン text={文言.nav.strength} onClick={() => 移動("strength")} />
             <ナビボタン text={文言.nav.flow} onClick={() => 移動("flow")} />
             <ナビボタン text={文言.nav.business} onClick={() => 移動("business")} />
+            <ナビボタン text={文言.nav.news} onClick={() => 移動("news")} />
+            <ナビボタン text={文言.nav.philosophy} onClick={() => 移動("philosophy")} />
             <ナビボタン text={文言.nav.company} onClick={() => 移動("company")} />
 
             <button
@@ -1070,10 +1088,14 @@ display: none;
             overflow: "hidden",
           }}
           >
-          
-          <video autoPlay muted loop playsInline className="hero-video">
-            <source src={動画URL} type="video/mp4" />
-          </video>
+    <video autoPlay muted loop playsInline className="hero-video hero-video-pc">
+  <source src={動画URL} type="video/mp4" />
+</video>
+
+      
+   <video autoPlay muted loop playsInline className="hero-video hero-video-mobile">
+  <source src={スマホ動画URL} />
+</video>
 
           <div className="hero-overlay" />
           <div className="hero-grid" />
@@ -1246,6 +1268,8 @@ display: none;
             </div>
           </div>
         </section>
+
+
 {/* 事業紹介 */}
 <section id="business" className="section">
   <div className="inner">
@@ -1297,6 +1321,86 @@ display: none;
   </div>
 </section>
 
+{/* お知らせ */}
+<section id="news" className="section">
+  <div className="inner">
+    <見出し
+      en="NEWS"
+      title="お知らせ"
+      description="株式会社OSRからのお知らせをご案内します。"
+    />
+<div className="news-list">
+
+  <a
+    href="https://youtu.be/FiPLOYbRcco?si=MlwXQ4YDngu1oWgH"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="news-item"
+  >
+    <span className="news-date">2026.08.25</span>
+    <span className="news-category">MEDIA</span>
+    <span className="news-title">
+      代表取締役 大崎純がYouTubeチャンネル「令和の虎」に出演しました。
+    </span>
+    <span className="news-arrow">→</span>
+  </a>
+
+  
+  <a
+    href="https://www.osr-inc.jp/"
+    className="news-item"
+  >
+    <span className="news-date">2026.08.20</span>
+    <span className="news-category">WEBSITE</span>
+    <span className="news-title">
+      株式会社OSR 公式総合サイトをリニューアルしました。
+    </span>
+    <span className="news-arrow">→</span>
+  </a>
+
+  <button
+    type="button"
+    onClick={() => 移動("business")}
+    className="news-item"
+  >
+    <span className="news-date">2026.08.16</span>
+    <span className="news-category">SERVICE</span>
+    <span className="news-title">
+      重量鳶・リフォーム・デジタルサイネージの各事業をご案内しています。
+    </span>
+    <span className="news-arrow">→</span>
+  </button>
+
+</div>
+
+    
+  </div>
+</section>
+
+{/* 企業理念・使命 */}
+<section id="philosophy" className="section section-alt">
+  <div className="inner">
+    <見出し
+      en="PHILOSOPHY"
+      title="企業理念・使命"
+      description="OSRが大切にしている想い"
+    />
+
+    <div className="philosophy-content">
+      <h3>企業理念</h3>
+      <p>
+        熱情と知恵で生む挑戦により、新たな価値豊かな暮らしを創造する。
+      </p>
+
+      <h3>使命</h3>
+      <p>
+        熱情を力に、知恵を技術に、挑戦を価値に。
+        期待を超える仕事で、人と社会の未来をつくる。
+      </p>
+    </div>
+  </div>
+</section>
+        
         {/* 会社概要 */}
         <section id="company" className="section">
           <div className="inner">
@@ -1532,6 +1636,8 @@ const 翻訳 = {
       strength: "OSRの強み",
       flow: "導入フロー",
       business:"事業紹介",
+      news:"お知らせ",
+      philosophy:"企業理念・使命",
       company: "会社概要",
       contact: "お問い合わせ",
     },
@@ -1637,7 +1743,7 @@ const 翻訳 = {
         {
           title: "屋外LEDビジョン",
           text:
-            "ビル外壁・店舗前・商業施設・屋外広告などに適したLEDビジョンです。屋外環境でも見やすい高精度モデルをはじめ、設置場所や用途に合わせた仕様をご提案します。",
+            "ビル外壁・店舗前・商業施設・屋外広告などに適したLEDビジョンです。屋外環境でも見やすい高輝度モデルをはじめ、設置場所や用途に合わせた仕様をご提案します。",
         },
         {
           title: "液晶デジタルサイネージ",
@@ -1665,7 +1771,7 @@ const 翻訳 = {
     strength: {
       title: "OSRの強み",
       description:
-        "デジタルサイネージの提案力に加え、施工会社として培ってきた現場対応力がOSRの強みです。　　　　　機器選定から搬入・設置・施工・導入後の運用まで一貫して対応します。",
+        "デジタルサイネージの提案力に加え、施工会社として培ってきた現場対応力がOSRの強みです。機器の選定から搬入・設置・施工・導入後の運用まで一貫して対応します。",
       items: [
         {
           title: "施工力",
@@ -1685,7 +1791,7 @@ const 翻訳 = {
         {
           title: "柔軟な対応",
           text:
-            "店舗への1台導入から、商業施設・オフィス・イベント会場などへの複数台設置、大型LEDビジョンまで、規模や用途に合わせて柔軟に対応します。。",
+            "店舗への1台導入から、商業施設・オフィス・イベント会場などへの複数台設置、大型LEDビジョンまで、規模や用途に合わせて柔軟に対応します。",
         },
       ],
     },
@@ -1697,7 +1803,7 @@ const 翻訳 = {
       items: [
         {
           title:"お問い合わせ",
-          text:"まずはお電話・LINE・お問い合わせフォームよりお気軽にご相談ください。導入を検討されている場所や用途、ご希望など、分かる範囲でお聞かせください。"
+          text:"まずはお電話・LINE・お問い合わせフォームよりお気軽にご相談ください。導入をご検討されている場所や用途、ご希望など、分かる範囲でお聞かせください。"
         },
         {
           title:"ヒアリング",
@@ -1731,7 +1837,7 @@ const 翻訳 = {
         "代表取締役　大崎 純",
       address: "所在地",
       addressValue:
-        "〒344-0066　埼玉県春日部市豊町6-1-2MOTOパラダイスビル",
+        "〒344-0066　埼玉県春日部市豊町6-1-2 MOTOパラダイスビル",
       business: "事業内容",
       businessValue:
         "重量物搬入・据付工事/リフォーム事業/デジタルサイネージ事業",
@@ -1763,6 +1869,8 @@ const 翻訳 = {
       products: "Products",
       strength: "Why OSR",
       flow: "Process",
+      news: "News",
+　　　philosophy: "Philosophy & Mission",
       company: "Company",
       contact: "Contact",
     },
@@ -1947,6 +2055,8 @@ const 翻訳 = {
       products: "产品",
       strength: "OSR优势",
       flow: "导入流程",
+      news: "新闻",
+　　　　philosophy: "企业理念・使命",
       company: "公司简介",
       contact: "联系我们",
     },
@@ -2131,6 +2241,9 @@ const 翻訳 = {
       products: "Sản phẩm",
       strength: "Thế mạnh OSR",
       flow: "Quy trình",
+      news: "Tin tức",
+philosophy: "Triết lý & Sứ mệnh",
+
       company: "Công ty",
       contact: "Liên hệ",
     },
