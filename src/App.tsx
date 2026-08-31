@@ -1,17 +1,183 @@
 import renovationImage from "./renovation.png";
 import heavyLiftingImage from "./heavy-lifting.png"
 
-import { useState } from "react";
+import { useEffect,useState } from "react";
 
 type Language = "ja" | "en" | "zh" | "vi";
 
 export default function App() {
+const [productIndex,setProductIndex] = useState(0);
+const [strengthVisible, setStrengthVisible] = useState(false);
+const [flowVisible, setFlowVisible] = useState(false);
+const [philosophyVisible, setPhilosophyVisible] = useState(false);
+  const [submitError,setSubmitError] = useState(false);
+const [soundOn, setSoundOn] = useState(false);
+  
+useEffect(() => {
+  const philosophySection = document.querySelector("#philosophy");
+
+  if (!philosophySection) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+  setPhilosophyVisible(entry.isIntersecting);   
+      },
+    
+    { threshold: 0.25 }
+  );
+
+  observer.observe(philosophySection);
+
+  return () => observer.disconnect();
+}, []);
+
+ useEffect(() => {
+  const companySection = document.querySelector(".company-reveal");
+
+  if (!companySection) return;
+
+  const observer = new IntersectionObserver(
+
+([entry]) => {
+  setCompanyVisible(entry.isIntersecting);
+},
+ { threshold: 0.65 }
+  );
+
+  observer.observe(companySection);
+
+  return () => observer.disconnect();
+}, []); 
+useEffect(() => {
+  const flowSection = document.querySelector("#flow");
+
+  if (!flowSection) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setFlowVisible(true);
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.25 }
+  );
+
+  observer.observe(flowSection);
+
+  return () => observer.disconnect();
+}, []);
+useEffect(() => {
+  const strengthSection = document.querySelector("#strength");
+
+  if (!strengthSection) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setStrengthVisible(true);
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.25 }
+  );
+
+  observer.observe(strengthSection);
+
+  return () => observer.disconnect();
+}, []);
+  
+  const [mouse, setMouse] = useState({ x: -500, y: -500 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMouse({
+        x: e.clientX,
+        y: e.clientY,
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  const [statsVisible, setStatsVisible] = useState(false);
+
+useEffect(() => {
+  const statsSection = document.querySelector("#products .stats-grid");
+
+  if (!statsSection) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setStatsVisible(true);
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.3 }
+  );
+  observer.observe(statsSection);
+
+return () => observer.disconnect();
+}, []);
+  const [count98, setCount98] = useState(0);
+const [count6, setCount6] = useState(0);
+const [count8, setCount8] = useState(0);
+
+useEffect(() => {
+  if (!statsVisible) return;
+
+  const duration = 3000;
+  const start = performance.now();
+
+  const animate = (now: number) => {
+    const progress = Math.min((now - start) / duration, 1);
+
+    setCount98(Math.floor(98 * progress));
+    setCount6(Math.floor(6 * progress));
+    setCount8(Math.floor(8 * progress));
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    }
+  };
+
+  requestAnimationFrame(animate);
+}, [statsVisible]);
+  const [serviceVisible, setServiceVisible] = useState(false);
+
+useEffect(() => {
+  const serviceSection = document.getElementById("service");
+
+  if (!serviceSection) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setServiceVisible(true);
+        observer.disconnect();
+      }
+    },
+    {
+      threshold: 0.2,
+    }
+  );
+
+  observer.observe(serviceSection);
+
+  return () => observer.disconnect();
+}, []);
+  
   // ==========================================================
   // ★★★★★ ここだけ差し替えてください ★★★★★
   // ==========================================================
 
-  const 動画URL = "https://res.cloudinary.com/wngor8ac/video/upload/f_mp4/株式会社OSR動画PCサイズ.mp4";
-  const スマホ動画URL = "https://res.cloudinary.com/wngor8ac/video/upload/v1787624351/Blue_Neon_Background_Mobile_Video.mp4"
+  const pc動画URL = "https://fxpswzbkfeoedmvbcmef.supabase.co/storage/v1/object/public/videos/osr-signage-video-32.mp4";
+  const mobile動画URL = "https://fxpswzbkfeoedmvbcmef.supabase.co/storage/v1/object/public/videos/osr-signage-video-32.mp4";
   const ロゴURL = "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/435229df-1a79-4dc2-82df-ed1318396242";
   const LINE_URL = "https://lin.ee/9p0u2gO";
   const TEL_URL = "tel:048-633-4952";
@@ -69,6 +235,14 @@ export default function App() {
 
   return (
     <>
+      <div
+  className="mouse-light"
+  style={{
+    left: `${mouse.x}px`,
+    top: `${mouse.y}px`,
+  }}
+/>
+
       <style>{`
         * {
           box-sizing: border-box;
@@ -82,6 +256,34 @@ export default function App() {
           margin: 0;
         }
 
+       
+.mouse-light {
+  position: fixed;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+
+  background: radial-gradient(
+    circle,
+    rgba(255, 210, 90, 0.32) 0%,
+    rgba(255, 180, 50, 0.20) 28%,
+    rgba(255, 145, 20, 0.10) 48%,
+    transparent 72%
+  );
+
+  transform: translate(-50%, -50%);
+  filter: blur(8px);
+  transition: left 0.08s ease-out, top 0.08s ease-out;
+}
+
+@media (max-width: 768px) {
+  .mouse-light {
+    display: none;
+  }
+}
+
         button,
         input,
         textarea {
@@ -89,6 +291,7 @@ export default function App() {
         }
 
         .osr-page {
+        padding-top: 78px;
         font-family: "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", serif;
           min-height: 100vh;
           overflow-x: hidden;
@@ -247,7 +450,7 @@ export default function App() {
         .hero {
           position: relative;
           hight: 100vh !important;
-          min-hight: 100vh !important;
+          min-hight:100vh !important;
           display: flex;
           align-items: center;
           overflow: hidden;
@@ -349,12 +552,12 @@ export default function App() {
         }
 
         .section {
-          padding: 120px 5vw;
+          padding: 80px 5vw;
           background: #05070b;
         }
 
         .section-alt {
-          padding: 120px 5vw;
+          padding: 80px 5vw;
           background:
             radial-gradient(
               circle at top right,
@@ -406,6 +609,12 @@ export default function App() {
         }
 
         .glow-card {
+        transition:
+  transform 0.35s ease,
+  border-color 0.35s ease,
+  box-shadow 0.35s ease,
+  background 0.35s ease;
+
           position: relative;
           overflow: hidden;
           min-height: 190px;
@@ -418,6 +627,209 @@ export default function App() {
               rgba(255,255,255,.012)
             );
         }
+        .glow-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(255, 210, 90, 1);
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.35),
+    0 0 18px rgba(255, 200, 70, 0.55),
+    0 0 40px rgba(255, 170, 40, 0.30);
+}
+
+.product-slide-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 210, 90, 0.8);
+  background: rgba(5, 7, 11, 0.88);
+  color: #ffd25a;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 10;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+
+}
+.product-carousel {
+  position: relative;
+  width: 100%;
+  margin-top: 45px;
+  padding-bottom: 55px;
+}
+
+.carousel-track {
+  position: relative;
+  height: 520px;
+  perspective: 1200px;
+  overflow: hidden;
+}
+
+.carousel-card {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  width: 34%;
+  min-height: 450px;
+  margin-left: -17%;
+  padding: 18px;
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 210, 90, 0.25);
+  background: linear-gradient(
+    145deg,
+    #0b1017,
+    #05070b
+  );
+
+  transition:
+    transform 0.55s ease,
+    opacity 0.55s ease,
+    border-color 0.55s ease,
+    box-shadow 0.55s ease;
+
+  transform-style: preserve-3d;
+}
+
+.carousel-card.active {
+  border-color: rgba(255, 210, 90, 1);
+
+  box-shadow:
+    0 0 18px rgba(255, 210, 90, 0.45),
+    0 0 45px rgba(255, 170, 40, 0.22);
+}
+
+.carousel-card .product-image {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.carousel-card.active .product-image {
+  height: 285px;
+}
+
+.carousel-card .card-title {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.carousel-card.active .card-title {
+  font-size: 24px;
+}
+
+.product-carousel .carousel-arrow {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+
+  border: 1px solid #ffd25a;
+  background: rgba(5, 7, 11, 0.92);
+  color: #ffd25a;
+
+  font-size: 34px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 30;
+
+  transition: 0.3s ease;
+}
+
+.product-carousel .carousel-arrow-left {
+  left: 5px;
+}
+
+.product-carousel .carousel-arrow-right {
+  right: 5px;
+}
+
+.product-carousel .carousel-arrow:hover {
+  background: rgba(255, 190, 70, 0.15);
+  box-shadow:
+    0 0 18px rgba(255, 210, 90, 0.5),
+    0 0 35px rgba(255, 170, 40, 0.25);
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.carousel-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 210, 90, 0.25);
+  cursor: pointer;
+}
+
+.carousel-dot.active {
+  background: #ffd25a;
+  box-shadow: 0 0 12px rgba(255, 210, 90, 0.7);
+}
+
+@media (max-width: 768px) {
+  .carousel-track {
+    height: 470px;
+  }
+
+  .carousel-card {
+    width: 72%;
+    margin-left: -36%;
+    min-height: 410px;
+  }
+
+  .carousel-card .product-image {
+    height: 220px;
+  }
+
+  .carousel-card.active .product-image {
+    height: 240px;
+  }
+
+  .carousel-arrow {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+.service-reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.service-reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.service-image {
+  transition: transform 0.45s ease;
+}
+
+.glow-card:hover .service-image {
+  transform: scale(1.045);
+}
+        
         .service-icon {
   width: 150px;
   height: 150px;
@@ -454,6 +866,13 @@ export default function App() {
         }
 
 .scene-card {
+position: relative;
+overflow: hidden;
+
+transition:
+  transform 0.35s ease,
+  border-color 0.35s ease,
+  box-shadow 0.35s ease;
   min-height: 430px;
   padding: 18px;
   display: flex;
@@ -467,6 +886,208 @@ export default function App() {
       #05070b
     );
 }
+.scene-flip-card {
+  perspective: 1200px;
+  min-height: 0;
+  height: 280px;
+  padding:0;
+  display: block;
+}
+
+.scene-flip-inner {
+  position: relative;
+  width: 100%;
+  min-height: 100px;
+  transition: transform 0.7s ease;
+  transform-style: preserve-3d;
+}
+
+.scene-flip-card:hover .scene-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.scene-flip-front,
+.scene-flip-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.scene-flip-front {
+  background: #07101a;
+  overflow: hidden;
+}
+
+.scene-flip-front .scene-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.scene-flip-front .number,
+.scene-flip-front .scene-title {
+  position: absolute;
+  left: 18px;
+  z-index: 2;
+}
+
+.scene-flip-front .number {
+  bottom: 54px;
+}
+
+.scene-flip-front .scene-title {
+  bottom: 18px;
+  color: white;
+}
+
+.scene-flip-front::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 24%;
+  background: linear-gradient(
+    to top,
+    rgba(5, 7, 11, 0.72),
+    rgba(5, 7, 11, 0)
+  );
+}
+
+.scene-flip-back {
+  transform: rotateY(180deg);
+  padding: 28px;
+  border: 1px solid rgba(255, 210, 90, 0.45);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 190, 70, 0.08),
+      rgba(5, 7, 11, 0.98)
+    );
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.scene-flip-back .number {
+  color: #ffd25a;
+  text-shadow: 0 0 12px rgba(255, 210, 90, 0.55);
+}
+
+.scene-flip-back .scene-title {
+  margin-top: 12px;
+  margin-bottom: 18px;
+}
+
+.scene-flip-back .scene-text {
+  line-height: 1.9;
+}
+.scene-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 210, 90, 0.9);
+  box-shadow:
+    0 14px 35px rgba(0, 0, 0, 0.3),
+    0 0 24px rgba(255, 185, 60, 0.2);
+}
+/* 導入シーン・めくる前の表面を強制修正 */
+.scene-card.scene-flip-card {
+  min-height: 280px !important;
+  height: 280px !important;
+  padding: 0 !important;
+}
+
+.scene-flip-inner {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+.scene-flip-front {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.scene-flip-front .scene-img {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  object-fit: cover !important;
+}
+.stats-section {
+  padding: 80px 0;
+  background: #05070b;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.stat-card {
+  padding: 24px 16px;
+  text-align: center;
+  border: 1px solid rgba(255, 210, 90, 0.35);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 190, 70, 0.06),
+    rgba(255, 255, 255, 0.01)
+  );
+}
+
+.stat-number {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  color: #ffd25a;
+  text-shadow:
+    0 0 12px rgba(255, 210, 90, 0.5),
+    0 0 30px rgba(255, 170, 40, 0.25);
+}
+
+.stat-label {
+  margin-top: 10px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.72);
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-number {
+    font-size: 52px;
+  }
+}
+.scene-card::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 0;
+  height: 2px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 210, 90, 1),
+    transparent
+  );
+
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s ease;
+}
+
+.scene-card:hover::after {
+  transform: scaleX(1);
+}
+
       
           flex-direction: column;
           justify-content: flex-end;
@@ -480,9 +1101,9 @@ export default function App() {
         }
         .scene-img {
         width: 100%;
-        height: 160px;
+        height: 100px;
         object-fit: cover;
-        margin-bottom: 14px;
+        margin-bottom: 0;
         }
         .scene-title {
   font-size: 18px;
@@ -537,6 +1158,71 @@ export default function App() {
             );
         }
 
+        .strength-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  position: relative;
+  overflow: hidden;
+}
+
+.strength-reveal.show {
+  animation: strengthReveal 1.8s ease forwards;
+}
+
+@keyframes strengthReveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.strength-reveal::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 70%;
+  height: 100%;
+  pointer-events: none;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 210, 90, 0.22),
+    rgba(255, 245, 200, 0.4),
+    transparent
+  );
+
+  transform: skewX(-18deg);
+}
+
+.strength-reveal.show::after {
+  animation: strengthScan 0.9s ease forwards;
+  animation-delay: inherit;
+}
+
+@keyframes strengthScan {
+  from {
+    left: -120%;
+  }
+
+  to {
+    left: 140%;
+  }
+}
+
+.strength-reveal.show .strength-num {
+  color: #ffd25a;
+  text-shadow:
+    0 0 10px rgba(255, 210, 90, 0.65),
+    0 0 24px rgba(255, 170, 40, 0.3);
+}
+
         .strength-number {
           font-size: 52px;
           font-weight: 700;
@@ -548,20 +1234,186 @@ export default function App() {
           font-size: 24px;
         }
 
-        .flow-grid {
-          margin-top: 50px;
-          display: grid;
-          grid-template-columns: repeat(3, minmax(0,1fr));
-          gap: 14px;
-        }
+      .flow-grid {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 14px;
+  position: relative;
 
+  background-image: linear-gradient(
+    270deg,
+    transparent,
+    #ffd25a,
+    #ffd25a,
+    transparent
+  );
+  background-repeat: no-repeat;
+  background-size: 68% 2px;
+  background-position: center calc(100% + 14px);
+}  
+
+
+.flow-grid::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 16%;
+  width: 68%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #ffd25a,
+    #ffd25a,
+    transparent
+  );
+  box-shadow: 0 0 14px rgba(255, 210, 90, 0.6);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: flowLine 1.4s ease forwards;
+  z-index: 0;
+}
+.flow-grid::after {
+  content: "";
+  position: absolute;
+  top: -14px;
+  right: -10px;
+  width: 2px;
+  height: calc(100% + 28px);
+  background: linear-gradient(
+    180deg,
+    #ffd25a,
+    #ffd25a
+  );
+  box-shadow: 0 0 14px rgba(255, 210, 90, 0.6);
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: flowDown 0.8s ease forwards;
+  animation-delay: 1.4s;
+  z-index: 0;
+}
+
+@keyframes flowDown {
+  from {
+    transform: scaleY(0);
+  }
+.flow-bottom-line {
+  position: absolute;
+  bottom: -14px;
+  right: 16%;
+  width: 68%;
+  height: 2px;
+  background: linear-gradient(
+    270deg,
+    transparent,
+    #ffd25a,
+    #ffd25a,
+    transparent
+  );
+  box-shadow: 0 0 14px rgba(255, 210, 90, 0.6);
+  transform: scaleX(0);
+  transform-origin: right;
+  animation: flowBottom 1.4s ease forwards;
+  animation-delay: 2.2s;
+  z-index: 0;
+}
+
+@keyframes flowBottom {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes flowLine {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
         .flow-card {
           min-height: 130px;
           padding: 24px;
           border: 1px solid rgba(0,255,231,.14);
           background: rgba(255,255,255,.015);
         }
+.flow-step-card {
+  position: relative;
+  overflow: hidden;
+  opacity: 0.45;
+  transform: translateY(18px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
 
+.flow-step-card.flow-show {
+  animation: flowStepGlow 0.8s ease forwards;
+}
+
+.flow-step-card.flow-show::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 70%;
+  height: 100%;
+  pointer-events: none;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 210, 90, 0.15),
+    rgba(255, 235, 160, 0.55),
+    transparent
+  );
+
+  transform: skewX(-18deg);
+  animation: flowLight 3s ease forwards;
+  animation-delay: inherit;
+}
+
+@keyframes flowStepGlow {
+  0% {
+    opacity: 0.45;
+    transform: translateY(18px);
+  }
+
+  60% {
+    opacity: 1;
+    border-color: rgba(255, 210, 90, 0.95);
+    box-shadow: 0 0 28px rgba(255, 190, 60, 0.35);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    border-color: rgba(255, 210, 90, 0.45);
+  }
+}
+
+@keyframes flowLight {
+  from {
+    left: -120%;
+  }
+
+  to {
+    left: 140%;
+  }
+}
         .flow-title {
           margin-top: 18px;
           font-size: 17px;
@@ -583,6 +1435,12 @@ export default function App() {
           padding: 21px 0;
           border-bottom: 1px solid rgba(255,255,255,.08);
         }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
         .company-label {
           color: #00ffe7;
@@ -750,6 +1608,11 @@ export default function App() {
         }
 
         @media (max-width: 820px) {
+        .hero {
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: 16 / 9;
+}
         
 .contact-desktop {
 display: none;
@@ -987,7 +1850,134 @@ display: none;
           .secondary-button {
             width: 100%;
           }
-      `} </style>
+.business-link-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 0.45s ease,
+    box-shadow 0.45s ease,
+    border-color 0.45s ease;
+}
+
+.business-link-card:hover {
+  transform: translateY(-10px) scale(1.025);
+  border-color: rgba(255, 210, 90, 0.8);
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.38),
+    0 0 28px rgba(255, 190, 60, 0.18);
+}
+
+.business-link-card::after {
+  content: "";
+  position: absolute;
+  top: -45%;
+  left: -90%;
+  width: 45%;
+  height: 190%;
+  pointer-events: none;
+  z-index: 5;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 210, 90, 0.18),
+    rgba(255, 245, 190, 1),
+    rgba(255, 190, 60, 0.5),
+    transparent
+  );
+
+  filter: blur(2px);
+  transform: rotate(24deg);
+  transition: left 0.75s ease;
+}
+
+.business-link-card:hover::after {
+  left: 145%;
+}
+
+.business-link-card:hover::after {
+  left: 140%;
+}
+
+.business-view-site {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 12px 20px;
+  width: fit-content;
+  border: 1px solid rgba(255, 210, 90, 0.65);
+  background: rgba(5, 7, 11, 0.8);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.business-link-card:hover .business-view-site {
+  opacity: 1;
+  transform: translateY(0);
+  box-shadow: 0 0 18px rgba(255, 190, 60, 0.28);
+}
+          
+     
+      a.business-link-card .business-view-site {
+  opacity: 0 !important;
+  transform: translateY(18px) !important;
+  pointer-events: none;
+}
+
+a.business-link-card:hover .business-view-site {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  pointer-events: auto;
+}
+
+  .philosophy-item {
+  opacity: 0;
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.philosophy-left {
+  transform: translateX(-50px);
+}
+
+.philosophy-right {
+  transform: translateX(50px);
+  transition-delay: 0.25s;
+}
+.philosophy-item.show {
+opacity: 1;
+transform: translateX(0);
+}
+
+.philosophy-content::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  margin-top: 34px;
+  background: linear-gradient(
+    90deg,
+    #ffd25a,
+    rgba(255, 210, 90, 0.15)
+  );
+  transition: width 1s ease 0.55s;
+}
+
+#philosophy:has(.philosophy-item.show) .philosophy-content::after {
+  width: 100%;
+}
+
+     `} </style>
 
       <div className="osr-page">
         {/* HEADER */}
@@ -1095,15 +2085,35 @@ display: none;
             overflow: "hidden",
           }}
           >
-    <video autoPlay muted loop playsInline className="hero-video hero-video-pc">
-  <source src={動画URL} type="video/mp4" />
+    <video 
+      autoPlay 
+      muted={!soundOn}
+      loop 
+      playsInline
+      className="hero-video hero-video-pc">
+      
+  <source src={pc動画URL} type="video/mp4" />
 </video>
 
       
-   <video autoPlay muted loop playsInline className="hero-video hero-video-mobile">
-  <source src={スマホ動画URL} />
+   <video
+     autoPlay
+     muted={!soundOn}
+     loop 
+     playsInline
+     preload="auto"
+     className="hero-video hero-video-mobile">
+     
+  <source src={mobile動画URL}　type="video/mp4" />
 </video>
-
+<button
+  className="sound-button"
+  onClick={() => setSoundOn(!soundOn)}
+>
+  {soundOn ? "🔇 SOUND OFF" : "🔊 SOUND ON"}
+</button>
+          
+          
           <div className="hero-overlay" />
           <div className="hero-grid" />
 
@@ -1123,7 +2133,12 @@ display: none;
 
     <div className="cards">
       {文言.service.items.map((item, index) => (
-        <div className="glow-card" key={index}>
+<div
+  className={"glow-card service-reveal " + (serviceVisible ? "show" : "")}
+  key={index}
+  style={{ animationDelay: String(index * 0.12) + "s" }}
+>
+        
           <img
             src={サービス画像[index]}
             alt={item.title}
@@ -1158,25 +2173,43 @@ display: none;
 
     <div className="scene-grid">
       {文言.scene.items.map((item, index) => (
-        <div className="scene-card" key={index}>
-          <img
-            src={導入シーン画像[index]}
-            alt={item.title}
-            className="scene-img"
-          />
+<div className="scene-card scene-flip-card" key={index}>
+  <div className="scene-flip-inner">
 
-          <div className="number">
-            0{index + 1}
-          </div>
+    <div className="scene-flip-front">
+      <img
+        src={導入シーン画像[index]}
+        alt={item.title}
+        className="scene-img"
+      />
 
-          <div className="scene-title">
-            {item.title}
-          </div>
+      <div className="number">
+        0{index + 1}
+      </div>
 
-          <div className="scene-text">
-            {item.text}
-          </div>
-        </div>
+      <div className="scene-title">
+        {item.title}
+      </div>
+    </div>
+
+    <div className="scene-flip-back">
+      <div className="number">
+        0{index + 1}
+      </div>
+
+      <div className="scene-title">
+        {item.title}
+      </div>
+
+      <div className="scene-text">
+        {item.text}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  
       ))}
     </div>
     
@@ -1192,30 +2225,97 @@ display: none;
               description={文言.products.description}
             />
             
+<section className="stats-section">
+  <div className="inner">
+    <div className="stats-grid">
+
+      <div className="stat-card">
+        <div className="stat-number">{count98}</div>
+        <div className="stat-label">最大対応インチ</div>
+      </div>
+
+      <div className="stat-card">
+        <div className="stat-number">{count6}</div>
+        <div className="stat-label">製品ラインナップ</div>
+      </div>
+
+      <div className="stat-card">
+        <div className="stat-number">{count8}</div>
+        <div className="stat-label">対応サイズ数</div>
+      </div>
+
+    </div>
+  </div>
+</section>
             <p className="product-note">
               ※掲載画像はイメージです。実際の取扱製品・仕様とは異なる場合があります。詳細はお問い合わせください。
             </p>
-            
-          <div className="cards">
-              {文言.products.items.map((item, index) => (
-                <div className="glow-card" key={index}>
-                  <img
-                    src = {製品画像[index]}
-                    alt = {item.title}
-                    className="product-image"
-                    />
+<div className="product-carousel">
 
-                  <h3 className="card-title">
-                    {item.title}
-                  </h3>
 
-                  <p className="card-text">
-                    {item.text}
-                  </p>
-                </div>
-              ))}
-            </div>
+
+
+  <div className="carousel-track">
+    {文言.products.items.map((item, index) => {
+      const total = 文言.products.items.length;
+
+      let diff = index - productIndex;
+
+      if (diff > total / 2) diff -= total;
+      if (diff < -total / 2) diff += total;
+
+      return (
+
+<div
+  key={index}
+  className={"carousel-card " + (diff === 0 ? "active" : "")}
+  onClick={() => setProductIndex(index)}
+  style={{
+    transform:
+      "translateX(" + diff * 72 + "%) " +
+      "scale(" + (diff === 0 ? 1 : Math.abs(diff) === 1 ? 0.84 : 0.72) + ") " +
+      "rotateY(" + diff * -8 + "deg)",
+    opacity: Math.abs(diff) > 2 ? 0 : 1,
+    zIndex: 10 - Math.abs(diff),
+  }}
+>
+          <img
+            src={製品画像[index]}
+            alt={item.title}
+            className="product-image"
+          />
+
+          <h3 className="card-title">
+            {item.title}
+          </h3>
+
+          <p className="card-text">
+            {item.text}
+          </p>
+        </div>
+      );
+    })}
+  </div>
+
+
+    ›
+  
+
+  <div className="carousel-dots">
+    {文言.products.items.map((_, index) => (
+      <button
+        key={index}
+        type="button"
+       className={"carousel-dot " + (index === productIndex ? "active" : "")}
+         
+        onClick={() => setProductIndex(index)}
+      />
+    ))}
+  </div>
+
+</div>
           </div>
+          
         </section>
 
         {/* OSRの強み */}
@@ -1229,7 +2329,14 @@ display: none;
 
             <div className="strength-grid">
               {文言.strength.items.map((item, index) => (
-                <div className="strength-card" key={index}>
+
+  <div
+className={"strength-card strength-reveal " + (strengthVisible ? "show" : "")}
+  
+  key={index}
+style={{ animationDelay: String(index * 0.5) + "s" }}
+  
+>
                   <div className="strength-number">
                     0{index + 1}
                   </div>
@@ -1247,6 +2354,20 @@ display: none;
           </div>
         </section>
 
+        {/* SIGNAGE MARQUEE */}
+<div className="signage-marquee">
+  <div className="signage-marquee-track">
+    <span>
+      DIGITAL SIGNAGE — LED VISION — CONTENT — INSTALLATION — OPERATION — SUPPORT —
+    </span>
+    <span>
+      DIGITAL SIGNAGE — LED VISION — CONTENT — INSTALLATION — OPERATION — SUPPORT —
+    </span>
+    <span>
+      DIGITAL SIGNAGE — LED VISION — CONTENT — INSTALLATION — OPERATION — SUPPORT —
+    </span>
+  </div>
+</div>
         {/* 導入フロー */}
         <section id="flow" className="section-alt">
           <div className="inner">
@@ -1257,8 +2378,15 @@ display: none;
             />
 
             <div className="flow-grid">
+
               {文言.flow.items.map((item, index) => (
-                <div className="flow-card" key={index}>
+                <div 
+className={"flow-card flow-step-card " + (flowVisible ? "flow-show" : "")}
+                 
+                  key={index}
+style={{ animationDelay: String(index * 1.0) + "s" }}
+                 
+                    >
                   <img
   src={導入フロー画像[index]}
   alt={item.title}
@@ -1308,7 +2436,7 @@ display: none;
         <p>
           原状回復・内装工事・リフォームなど、幅広いご要望に対応します。
         </p>
-        <span>リフォームHPを見る →</span>
+        <span className="business-view-site">VIEW SITE ➡</span>
       </a>
 
       <a
@@ -1327,7 +2455,7 @@ display: none;
         <p>
           重量物の搬入・据付・移設など、確かな技術と施工力で対応します。
         </p>
-        <span>重量鳶HPを見る →</span>
+        <span className="business-view-site">VIEW SITE ➡</span>
       </a>
     </div>
   </div>
@@ -1399,16 +2527,21 @@ display: none;
     />
 
     <div className="philosophy-content">
-      <h3>企業理念</h3>
-      <p>
-        熱情と知恵で生む挑戦により、新たな価値豊かな暮らしを創造する。
-      </p>
 
-      <h3>使命</h3>
-      <p>
-        熱情を力に、知恵を技術に、挑戦を価値に。
-        期待を超える仕事で、人と社会の未来をつくる。
-      </p>
+      <div className={"philosophy-item philosophy-left " + (philosophyVisible ? "show" : "")}>
+        <h3>企業理念</h3>
+        <p>
+          熱情と知恵で生む挑戦により、新たな価値豊かな暮らしを創造する。
+        </p>
+      </div>
+
+      <div className={"philosophy-item philosophy-right " + (philosophyVisible ? "show" : "")}>
+        <h3>使命</h3>
+        <p>
+          熱情を力に、知恵を技術に、挑戦を価値に。期待を超える仕事で、人と社会の未来をつくる。
+        </p>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1462,7 +2595,7 @@ display: none;
       form.reset();
       window.location.href = "/";
     } else {
-      alert("送信に失敗しました。もう一度お試しください。");
+   setSubmitError(true);
     }
   }}
 >
@@ -1482,10 +2615,17 @@ display: none;
 />
               
 
-              <button type="submit" className="submit-button">
-                {文言.contact.submit}
-              </button>
-            </form>
+ <button type="submit" className="submit-button">
+  {文言.contact.submit}
+</button>
+
+{submitError && (
+  <div className="form-error">
+    送信できませんでした。通信状況をご確認のうえ、もう一度お試しください。
+  </div>
+)}
+
+</form>
           </div>
         </section>
 

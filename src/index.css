@@ -1,4 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+.philosophy-content::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  margin-top: 34px;
+  background: linear-gradient(
+    90deg,
+    #ffd25a,
+    rgba(255, 210, 90, 0.15)
+  );
+  transition: width 1s ease 0.55s;
+}
+
+#philosophy:has(.philosophy-item.show) .philosophy-content::after {
+  width: 100%;
+}@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
 @import 'tailwindcss';
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -551,4 +567,141 @@ body {
   object-fit: cover;
   display: block;
   margin-bottom: 18px;
+}
+@keyframes serviceFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.service-reveal {
+  opacity: 0;
+  animation: serviceFadeUp 0.7s ease forwards;
+}
+.business-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.business-link-card {
+  height: auto;
+  min-height: 0;
+}
+
+@media (max-width: 768px) {
+  .business-links {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .business-link-card {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+}
+
+.form-error {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px solid #b9913b;
+  background: rgba(185, 145, 59, 0.08);
+  color: #d8c28a;
+  font-size: 14px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  #service {
+    padding-top: 40px;
+  }
+}
+
+.signage-marquee {
+  width: 100%;
+  overflow: hidden;
+  background: rgba(3, 12, 24, 0.96);
+  border-top: 1px solid rgba(0, 255, 231, 0.55);
+  border-bottom: 1px solid rgba(0, 255, 231, 0.55);
+  box-shadow:
+    0 -4px 18px rgba(0, 255, 231, 0.08),
+    0 4px 18px rgba(0, 255, 231, 0.08);
+  padding: 11px 0;
+}
+
+.signage-marquee-track {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  animation: signageMarquee 28s linear infinite;
+}
+
+.signage-marquee-track span {
+  flex-shrink: 0;
+  padding-right: 48px;
+  color: #00ffe7;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(0, 255, 231, 0.35);
+}
+
+@keyframes signageMarquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+.sound-button {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  z-index: 20;
+
+  padding: 10px 14px;
+  border: 1px solid rgba(255,255,255,.35);
+  background: rgba(0,0,0,.45);
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: .08em;
+  cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+  .sound-button {
+    display: block;
+    position: absolute;
+    right: 16px;
+    bottom: 20px;
+    z-index: 20;
+    padding: 10px 14px;
+    border: 1px solid rgba(255,255,255,.4);
+    background: rgba(0,0,0,.55);
+    color: #fff;
+    font-size: 13px;
+  }
+}
+@media (max-width: 768px) {
+  .hero-video-mobile {
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+    object-fit: cover !important;
+  }
 }
