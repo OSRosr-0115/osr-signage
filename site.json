@@ -1,0 +1,10 @@
+{
+  "description": "Showcases OSR's digital signage solutions for businesses, facilitating inquiries and providing clear information on services and installation processes.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
