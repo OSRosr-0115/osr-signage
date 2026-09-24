@@ -1,11 +1,54 @@
 import renovationImage from "./renovation.png";
 import heavyLiftingImage from "./heavy-lifting.png"
 
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
+
+const MICROCMS_URL = "https://osr.microcms.io/api/v1/blogs";
+const MICROCMS_API_KEY = "2rdpntmoIdpoM207ArHKLMWMUx7Bl6aim2O8";
+
+type BlogPost = {
+  id: string;
+  title: string;
+  content?: string;
+  body?: string;
+  eyecatch?: {
+    url: string;
+    width?: number;
+    height?: number;
+  };
+  category?: {
+    id?: string;
+    name?: string;
+    title?: string;
+  };
+  date?: string;
+  summary?: string;
+};
 
 type Language = "ja" | "en" | "zh" | "vi";
 
 export default function App() {
+  const [cmsPosts, setCmsPosts] = useState<BlogPost[]>([]);
+
+useEffect(() => {
+  fetch(MICROCMS_URL, {
+    headers: {
+      "X-MICROCMS-API-KEY": MICROCMS_API_KEY,
+    },
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("microCMSの取得に失敗しました");
+      return res.json();
+    })
+    .then((data) => {
+      setCmsPosts(data.contents || []);
+      console.log("microCMSの記事:", data.contents);
+    })
+    .catch((error) => {
+      console.error("microCMSエラー:", error);
+      setCmsPosts([]);
+    });
+}, []);
 const [productIndex,setProductIndex] = useState(0);
 const [strengthVisible, setStrengthVisible] = useState(false);
 const [flowVisible, setFlowVisible] = useState(false);
@@ -13,7 +56,9 @@ const [philosophyVisible, setPhilosophyVisible] = useState(false);
   const [submitError,setSubmitError] = useState(false);
 const [soundOn, setSoundOn] = useState(false);
   
-useEffect(() => {
+const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+const [page, setPage] = useState<"home" | "blog-detail">("home");
+  useEffect(() => {
   const philosophySection = document.querySelector("#philosophy");
 
   if (!philosophySection) return;
@@ -176,8 +221,8 @@ useEffect(() => {
   // ★★★★★ ここだけ差し替えてください ★★★★★
   // ==========================================================
 
-  const pc動画URL = "https://fxpswzbkfeoedmvbcmef.supabase.co/storage/v1/object/public/videos/osr-signage-video-32.mp4";
-  const mobile動画URL = "https://fxpswzbkfeoedmvbcmef.supabase.co/storage/v1/object/public/videos/osr-signage-video-32.mp4";
+  const pc動画URL = "https://res.cloudinary.com/xnqcsfha/video/upload/v1789719121/%E6%98%A0%E5%83%8F%E3%81%A7%E7%A9%BA%E9%96%93%E3%81%AE%E4%BE%A1%E5%80%A4%E3%82%92%E5%A4%89%E3%81%88%E3%82%8B%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC_32%E7%A7%92.mp4";
+  const mobile動画URL = "https://res.cloudinary.com/xnqcsfha/video/upload/v1789719121/%E6%98%A0%E5%83%8F%E3%81%A7%E7%A9%BA%E9%96%93%E3%81%AE%E4%BE%A1%E5%80%A4%E3%82%92%E5%A4%89%E3%81%88%E3%82%8B%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC_32%E7%A7%92.mp4";
   const ロゴURL = "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/435229df-1a79-4dc2-82df-ed1318396242";
   const LINE_URL = "https://lin.ee/9p0u2gO";
   const TEL_URL = "tel:048-633-4952";
@@ -232,8 +277,95 @@ useEffect(() => {
       });
     }, 50);
   };
-
+ if (selectedPost) {
   return (
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#080808",
+        color: "#ffffff",
+        padding: "60px 24px",
+      }}
+    >
+      <main
+        style={{
+          maxWidth: "900px",
+          margin: "0 auto",
+        }}
+      >
+        <button
+          onClick={() => setSelectedPost(null)}
+          style={{
+            background: "transparent",
+            border: "none",
+            color: "#d4af37",
+            fontSize: "15px",
+            cursor: "pointer",
+            padding: "0",
+            marginBottom: "50px",
+          }}
+        >
+          ← ブログ一覧へ戻る
+        </button>
+
+        <div
+          style={{
+            color: "#d4af37",
+            fontSize: "13px",
+            letterSpacing: "3px",
+            marginBottom: "15px",
+          }}
+        >
+          BLOG
+        </div>
+
+        <h1
+          style={{
+            fontSize: "clamp(28px, 5vw, 48px)",
+            lineHeight: "1.4",
+            marginBottom: "20px",
+          }}
+        >
+          {selectedPost.title}
+        </h1>
+
+        <div
+          style={{
+            width: "60px",
+            height: "2px",
+            background: "#d4af37",
+            marginBottom: "40px",
+          }}
+        />
+
+        {selectedPost.eyecatch?.url && (
+          <img
+            src={selectedPost.eyecatch.url}
+            alt={selectedPost.title}
+            style={{
+              width: "100%",
+              display: "block",
+              marginBottom: "40px",
+            }}
+          />
+        )}
+
+        <div
+          className="blog-detail-content"
+          style={{
+            fontSize: "16px",
+            lineHeight: "2",
+          }}
+          dangerouslySetInnerHTML={{
+            __html: selectedPost.content || selectedPost.body || "",
+          }}
+        />
+      </main>
+    </div>
+  );
+}
+  
+ return (
     <>
       <div
   className="mouse-light"
@@ -2017,6 +2149,7 @@ transform: translateX(0);
             <ナビボタン text={文言.nav.flow} onClick={() => 移動("flow")} />
             <ナビボタン text={文言.nav.business} onClick={() => 移動("business")} />
             <ナビボタン text={文言.nav.news} onClick={() => 移動("news")} />
+            <ナビボタン text={文言.nav.blog} onClick={() => 移動("blog")} />
             <ナビボタン text={文言.nav.philosophy} onClick={() => 移動("philosophy")} />
             <ナビボタン text={文言.nav.company} onClick={() => 移動("company")} />
 
@@ -2087,7 +2220,7 @@ transform: translateX(0);
           >
     <video 
       autoPlay 
-      muted={!soundOn}
+      muted
       loop 
       playsInline
       className="hero-video hero-video-pc">
@@ -2098,7 +2231,7 @@ transform: translateX(0);
       
    <video
      autoPlay
-     muted={!soundOn}
+     muted
      loop 
      playsInline
      preload="auto"
@@ -2470,6 +2603,62 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
       description="株式会社OSRからのお知らせをご案内します。"
     />
 <div className="news-list">
+<a
+  href="https://note.com/chousentairiku/n/nc8320c0a11f5"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="news-item"
+>
+  <span className="news-date">2026.09.07</span>
+  <span className="news-category">MEDIA</span>
+  <span className="news-title">
+    「挑戦大陸」に代表・大崎純のインタビュー記事が掲載されました。
+  </span>
+  <span className="news-arrow">→</span>
+</a>
+<a
+  href="https://na01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fnozokuru.jp%2Fosr-jun-osaki%2F&data=05%7C02%7C%7Ca0a40cba461947bae1bc08df0d4588d9%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C639244264441773512%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=S6YpPvjGE18du5V4F%2FX13ls5uV18L%2B5AYU2Z%2FIP7PqQ%3D&reserved=0"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="news-item"
+>
+  <span className="news-date">2026.09.07</span>
+  <span className="news-category">MEDIA</span>
+  <span className="news-title">
+    「NOZOKURU」に代表・大崎純のインタビュー記事が掲載されました。
+  </span>
+  <span className="news-arrow">→</span>
+</a>
+
+<a
+  href="https://na01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fnote.com%2Fshacho_homon%2Fn%2Fnd013a4dfb362%3Fsub_rt%3Dshare_b%26utm_source%3Dchatgpt.com&data=05%7C02%7C%7Ca0a40cba461947bae1bc08df0d4588d9%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C639244264441798817%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=vNiy%2FVX9fcTnYbllJGNe11eTtyT5Yw387D0vOCIPpfY%3D&reserved=0"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="news-item"
+>
+  <span className="news-date">2026.09.02</span>
+  <span className="news-category">MEDIA</span>
+  <span className="news-title">
+    「社長訪問」に代表・大崎純のインタビュー記事が掲載されました。
+  </span>
+  <span className="news-arrow">→</span>
+</a>
+
+<a
+  href="https://na01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fkensetsu-engine-media.jp%2Finterview%2F660770853&data=05%7C02%7C%7Ca0a40cba461947bae1bc08df0d4588d9%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C639244264441814797%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=Lnta8d5s9ZrzuPh%2FfWIKlXfulsNHqWSoUY7MJ%2FuRijE%3D&reserved=0"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="news-item"
+>
+  <span className="news-date">2026.08.31</span>
+  <span className="news-category">MEDIA</span>
+  <span className="news-title">
+    「建設円陣PLUS」に代表・大崎純のインタビュー記事が掲載されました。
+  </span>
+  <span className="news-arrow">→</span>
+</a>
+
+  
 
   <a
     href="https://youtu.be/FiPLOYbRcco?si=MlwXQ4YDngu1oWgH"
@@ -2516,7 +2705,92 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
     
   </div>
 </section>
+{/* ブログ */}
+<section id="blog" className="section">
+  <div className="inner">
+    <見出し
+      en="BLOG"
+      title="ブログ"
+      description=""
+    />
 
+<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+  {cmsPosts.length === 0 ? (
+    <p>現在、記事を準備中です。</p>
+  ) : (
+    cmsPosts.map((post: any) => {
+      const imageUrl =
+        typeof post.eyecatch === "string"
+          ? post.eyecatch
+          : post.eyecatch?.url || "";
+
+      return (
+        <article
+          key={post.id}
+          className="group cursor-pointer overflow-hidden bg-white"
+          style={{
+            border: "1px solid #E5E5E5",
+            borderRadius: "4px",
+          }}
+          onClick={() => {
+            setSelectedPost(post);
+            setPage("blog-detail");
+            window.scrollTo(0, 0);
+          }}
+        >
+          <div
+            className="overflow-hidden"
+            style={{ aspectRatio: "16/9" }}
+          >
+            {imageUrl && (
+              <img
+                src={imageUrl}
+                alt={post.title}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            )}
+          </div>
+
+          <div className="p-6">
+            <p
+              className="text-xs mb-4"
+              style={{ color: "#B89748" }}
+            >
+              {post.date
+                ? new Date(post.date).toLocaleDateString("ja-JP")
+                : ""}
+            </p>
+
+            <h2
+              className="text-lg font-bold mb-4 leading-relaxed"
+              style={{ color: "#14263D" }}
+            >
+              {post.title}
+            </h2>
+
+            <p
+              className="text-sm leading-relaxed mb-6"
+              style={{ color: "#777777" }}
+            >
+              {post.summary || ""}
+            </p>
+
+            <span
+              className="text-sm font-medium"
+              style={{ color: "#B89748" }}
+            >
+              続きを読む →
+            </span>
+          </div>
+        </article>
+      );
+    })
+  )}
+</div>
+    
+  </div>
+</section>
+        
 {/* 企業理念・使命 */}
 <section id="philosophy" className="section section-alt">
   <div className="inner">
@@ -2594,9 +2868,14 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
     if (response.ok) {
       form.reset();
       window.location.href = "/";
-    } else {
-   setSubmitError(true);
-    }
+
+
+     } else {
+  const errorText = await response.text();
+  console.error("Formspree error:", response.status, errorText);
+  alert(`送信エラー: ${response.status}\n${errorText}`);
+  setSubmitError(true);
+} 
   }}
 >
 
@@ -2789,6 +3068,7 @@ const 翻訳 = {
       flow: "導入フロー",
       business:"事業紹介",
       news:"お知らせ",
+      blog:"ブログ",
       philosophy:"企業理念・使命",
       company: "会社概要",
       contact: "お問い合わせ",
@@ -2994,7 +3274,7 @@ const 翻訳 = {
       businessValue:
         "重量物搬入・据付工事/リフォーム事業/デジタルサイネージ事業",
       constructionPermit:"建設業許可",
-      constructionPermitValue:"埼玉県知事許可(般-8)第79355号",
+      constructionPermitValue:"埼玉県知事許可(般-8)第79625号",
       licenseBusiness:"許可業種",
       licenseBusinessValue:"とび・土工工事業/解体工事業",
     },
@@ -3573,3 +3853,4 @@ philosophy: "Triết lý & Sứ mệnh",
     line: "Tư vấn qua LINE",
   },
 };
+
