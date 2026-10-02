@@ -10,7 +10,8 @@ export default function App() {
   // ★★★★★ ここだけ差し替えてください ★★★★★
   // ==========================================================
 
-  const 動画URL = "https://res.cloudinary.com/wngor8ac/video/upload/f_mp4/株式会社OSR動画PCサイズ.mp4";
+  const 動画URL = "./サイネージHP用32秒動画.mp4";
+    const 動画URL = "./サイネージHP用32秒動画.mp4";
   const ロゴURL = "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/435229df-1a79-4dc2-82df-ed1318396242";
   const LINE_URL = "https://lin.ee/9p0u2gO";
   const TEL_URL = "tel:048-633-4952";
