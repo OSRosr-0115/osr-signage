@@ -28,7 +28,7 @@ import ogataImage from "./ogata.png";
 import ekisyouImage from "./ekisyou.png";
 import kabekakeImage from "./kabekake.png"
 import { useEffect,useState } from "react";
-
+import signageVideo from "./サイネージHP用32秒動画.mp4";
 
 type Language = "ja" | "en" | "zh" | "vi";
 
@@ -215,8 +215,8 @@ useEffect(() => {
   // ★★★★★ ここだけ差し替えてください ★★★★★
   // ==========================================================
 
-  const pc動画URL = "https://fxpswzbkfeoedmvbcmef.supabase.co/storage/v1/object/public/videos/osr-signage-video-32.mp4";
-  const mobile動画URL = "https://fxpswzbkfeoedmvbcmef.supabase.co/storage/v1/object/public/videos/osr-signage-video-32.mp4";
+  const pc動画URL = signageVideo;
+  const mobile動画URL = signageVideo;
   const ロゴURL = companyLogoImage
   const LINE_URL = "https://lin.ee/9p0u2gO";
   const TEL_URL = "tel:048-633-4952";
