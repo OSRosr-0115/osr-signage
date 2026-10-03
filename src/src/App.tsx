@@ -1,47 +1,259 @@
 import renovationImage from "./renovation.png";
-import heavyLiftingImage from "./heavy-lifting.png"
+import heavyLiftingImage from "./heavy-lifting.png";
+import companyLogoImage from "./logo.png";
+import kikakuImage from "./kikaku.png";
+import gentyouImage from "./gentyou.png";
+import hannyuuImage from "./hannyuu.png";
+import sekouImage from "./sekou.png";
+import contentsImage from "./contents.png";
+import unyouImage from "./unyou.png";
+import shopImage from "./shop.png";
+import shoppingmallImage from "./shoppingmall.png";
+import restaurantImage from "./restaurant.png";
+import officeImage from "./office.png";
+import hotelImage from "./hotel.png";
+import eventImage from "./event.png";
+import showroomImage from "./showroom.png";
+import outdoorImage from "./outdoor.png";
+import contactImage from "./contact.png";
+import hearingImage from "./hearing.png";
+import gentityousaImage from "./gentityousa.png";
+import teianImage from "./teian.png";
+import settiImage from "./setti.png";
+import unyoukaishiImage from "./unyoukaishi.png";
+import standImage from "./stand.png";
+import okunaiImage from "./okunai.png";
+import okugaiImage from "./okugai.png";
+import ogataImage from "./ogata.png";
+import ekisyouImage from "./ekisyou.png";
+import kabekakeImage from "./kabekake.png"
+import { useEffect,useState } from "react";
 
-import { useState } from "react";
 
 type Language = "ja" | "en" | "zh" | "vi";
 
 export default function App() {
+const [productIndex,setProductIndex] = useState(0);
+const [strengthVisible, setStrengthVisible] = useState(false);
+const [flowVisible, setFlowVisible] = useState(false);
+const [philosophyVisible, setPhilosophyVisible] = useState(false);
+const [companyVisible, setCompanyVisible] = useState(false);
+  const [submitError,setSubmitError] = useState(false);
+const [soundOn, setSoundOn] = useState(false);
+  const [blogs, setBlogs] = useState<any[]>([]);
+  const [showAllBlogs, setShowAllBlogs] = useState(false);
+ useEffect(() => {
+  fetch("https://osr.microcms.io/api/v1/blogs?limit=100", {
+    headers: {
+      "X-MICROCMS-API-KEY": "2rdpntmoIdpoM207ArHKLMWMUx7Bl6aim2O8",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => setBlogs(data.contents))
+    .catch((error) => console.error(error));
+}, []); 
+useEffect(() => {
+  const philosophySection = document.querySelector("#philosophy");
+
+  if (!philosophySection) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+  setPhilosophyVisible(entry.isIntersecting);   
+      },
+    
+    { threshold: 0.25 }
+  );
+
+  observer.observe(philosophySection);
+
+  return () => observer.disconnect();
+}, []);
+
+ useEffect(() => {
+  const companySection = document.querySelector(".company-reveal");
+
+  if (!companySection) return;
+
+  const observer = new IntersectionObserver(
+
+([entry]) => {
+  setCompanyVisible(entry.isIntersecting);
+},
+ { threshold: 0.65 }
+  );
+
+  observer.observe(companySection);
+
+  return () => observer.disconnect();
+}, []); 
+useEffect(() => {
+  const flowSection = document.querySelector("#flow");
+
+  if (!flowSection) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setFlowVisible(true);
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.25 }
+  );
+
+  observer.observe(flowSection);
+
+  return () => observer.disconnect();
+}, []);
+useEffect(() => {
+  const strengthSection = document.querySelector("#strength");
+
+  if (!strengthSection) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setStrengthVisible(true);
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.25 }
+  );
+
+  observer.observe(strengthSection);
+
+  return () => observer.disconnect();
+}, []);
+  
+  const [mouse, setMouse] = useState({ x: -500, y: -500 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMouse({
+        x: e.clientX,
+        y: e.clientY,
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  const [statsVisible, setStatsVisible] = useState(false);
+
+useEffect(() => {
+  const statsSection = document.querySelector("#products .stats-grid");
+
+  if (!statsSection) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setStatsVisible(true);
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.3 }
+  );
+  observer.observe(statsSection);
+
+return () => observer.disconnect();
+}, []);
+  const [count98, setCount98] = useState(0);
+const [count6, setCount6] = useState(0);
+const [count8, setCount8] = useState(0);
+
+useEffect(() => {
+  if (!statsVisible) return;
+
+  const duration = 3000;
+  const start = performance.now();
+
+  const animate = (now: number) => {
+    const progress = Math.min((now - start) / duration, 1);
+
+    setCount98(Math.floor(98 * progress));
+    setCount6(Math.floor(6 * progress));
+    setCount8(Math.floor(8 * progress));
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    }
+  };
+
+  requestAnimationFrame(animate);
+}, [statsVisible]);
+  const [serviceVisible, setServiceVisible] = useState(false);
+
+useEffect(() => {
+  const serviceSection = document.getElementById("service");
+
+  if (!serviceSection) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setServiceVisible(true);
+        observer.disconnect();
+      }
+    },
+    {
+      threshold: 0.2,
+    }
+  );
+
+  observer.observe(serviceSection);
+
+  return () => observer.disconnect();
+}, []);
+  
   // ==========================================================
   // ★★★★★ ここだけ差し替えてください ★★★★★
   // ==========================================================
 
-  const 動画URL = "https://res.cloudinary.com/wngor8ac/video/upload/f_mp4/株式会社OSR動画PCサイズ.mp4";
-  const スマホ動画URL = "https://res.cloudinary.com/wngor8ac/video/upload/v1787624351/Blue_Neon_Background_Mobile_Video.mp4"
-  const ロゴURL = "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/435229df-1a79-4dc2-82df-ed1318396242";
+  const pc動画URL = "https://fxpswzbkfeoedmvbcmef.supabase.co/storage/v1/object/public/videos/osr-signage-video-32.mp4";
+  const mobile動画URL = "https://fxpswzbkfeoedmvbcmef.supabase.co/storage/v1/object/public/videos/osr-signage-video-32.mp4";
+  const ロゴURL = companyLogoImage
   const LINE_URL = "https://lin.ee/9p0u2gO";
   const TEL_URL = "tel:048-633-4952";
   const サービス画像 = [
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E6%8F%90%E6%A1%88",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E7%8F%BE%E8%AA%BF",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E6%90%AC%E5%85%A5",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E5%8F%96%E4%BB%98",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E5%88%B6%E4%BD%9C",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E9%81%8B%E7%94%A8%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88",
+    kikakuImage,
+    gentyouImage,
+    hannyuuImage,
+    sekouImage,
+    contentsImage,
+    unyouImage,
     ];
   const 製品画像 = [
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image15",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image16",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image17",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image20",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image19",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/image19",
+    okunaiImage,
+    okugaiImage,
+    ekisyouImage,
+    standImage,
+    kabekakeImage,
+    ogataImage,
     ];
   const 導入シーン画像 = [
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E5%BA%97%E8%88%97",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E9%A3%B2%E9%A3%9F%E5%BA%97",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E5%95%86%E6%A5%AD%E6%96%BD%E8%A8%AD",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E3%82%AA%E3%83%95%E3%82%A3%E3%82%B9",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%9B%E3%83%86%E3%83%AB",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E3%82%B7%E3%83%A7%E3%83%BC%E3%83%AB%E3%83%BC%E3%83%A0",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E5%B1%8B%E5%A4%96%E5%BA%83%E5%91%8A",
+    shopImage,
+    restaurantImage,
+    shoppingmallImage,
+    officeImage,
+    hotelImage,
+    eventImage,
+    showroomImage,
+    outdoorImage,
     ];
-    
+    const 導入フロー画像 = [
+     contactImage,
+      hearingImage,
+      gentityousaImage,
+      teianImage,
+      settiImage,
+      unyoukaishiImage,
+      ];
 
   // ==========================================================
 
@@ -51,17 +263,23 @@ export default function App() {
   const 文言 = 翻訳[言語];
 
   const 移動 = (id: string) => {
-    メニュー開閉(false);
-
-    setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({
-        behavior: "smooth",
-      });
-    }, 50);
-  };
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({ behavior: "smooth" });
+  }
+  メニュー開閉(false);
+};
 
   return (
     <>
+      <div
+  className="mouse-light"
+  style={{
+    left: `${mouse.x}px`,
+    top: `${mouse.y}px`,
+  }}
+/>
+
       <style>{`
         * {
           box-sizing: border-box;
@@ -75,6 +293,34 @@ export default function App() {
           margin: 0;
         }
 
+       
+.mouse-light {
+  position: fixed;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+
+  background: radial-gradient(
+    circle,
+    rgba(255, 210, 90, 0.32) 0%,
+    rgba(255, 180, 50, 0.20) 28%,
+    rgba(255, 145, 20, 0.10) 48%,
+    transparent 72%
+  );
+
+  transform: translate(-50%, -50%);
+  filter: blur(8px);
+  transition: left 0.08s ease-out, top 0.08s ease-out;
+}
+
+@media (max-width: 768px) {
+  .mouse-light {
+    display: none;
+  }
+}
+
         button,
         input,
         textarea {
@@ -82,6 +328,7 @@ export default function App() {
         }
 
         .osr-page {
+        padding-top: 78px;
         font-family: "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", serif;
           min-height: 100vh;
           overflow-x: hidden;
@@ -126,6 +373,7 @@ export default function App() {
           padding: 0;
           color: #fff;
           cursor: pointer;
+          margin-right: auto;
         }
 
         .logo-image {
@@ -223,7 +471,7 @@ export default function App() {
         }
 
         .mobile-menu-button {
-          display: none;
+          display: block;
           width: 42px;
           height: 42px;
           border: 1px solid rgba(0,255,231,.32);
@@ -240,7 +488,7 @@ export default function App() {
         .hero {
           position: relative;
           hight: 100vh !important;
-          min-hight: 100vh !important;
+          min-hight:100vh !important;
           display: flex;
           align-items: center;
           overflow: hidden;
@@ -342,12 +590,12 @@ export default function App() {
         }
 
         .section {
-          padding: 120px 5vw;
+          padding: 80px 5vw;
           background: #05070b;
         }
 
         .section-alt {
-          padding: 120px 5vw;
+          padding: 80px 5vw;
           background:
             radial-gradient(
               circle at top right,
@@ -360,6 +608,12 @@ export default function App() {
               #05070b 100%
             );
         }
+
+        .philosophy-section　{
+        background: #05070b;
+        }
+
+        
 
         .inner {
           width: 100%;
@@ -399,6 +653,12 @@ export default function App() {
         }
 
         .glow-card {
+        transition:
+  transform 0.35s ease,
+  border-color 0.35s ease,
+  box-shadow 0.35s ease,
+  background 0.35s ease;
+
           position: relative;
           overflow: hidden;
           min-height: 190px;
@@ -411,6 +671,209 @@ export default function App() {
               rgba(255,255,255,.012)
             );
         }
+        .glow-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(255, 210, 90, 1);
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.35),
+    0 0 18px rgba(255, 200, 70, 0.55),
+    0 0 40px rgba(255, 170, 40, 0.30);
+}
+
+.product-slide-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 210, 90, 0.8);
+  background: rgba(5, 7, 11, 0.88);
+  color: #ffd25a;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 10;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+
+}
+.product-carousel {
+  position: relative;
+  width: 100%;
+  margin-top: 45px;
+  padding-bottom: 55px;
+}
+
+.carousel-track {
+  position: relative;
+  height: 520px;
+  perspective: 1200px;
+  overflow: hidden;
+}
+
+.carousel-card {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  width: 34%;
+  min-height: 450px;
+  margin-left: -17%;
+  padding: 18px;
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 210, 90, 0.25);
+  background: linear-gradient(
+    145deg,
+    #0b1017,
+    #05070b
+  );
+
+  transition:
+    transform 0.55s ease,
+    opacity 0.55s ease,
+    border-color 0.55s ease,
+    box-shadow 0.55s ease;
+
+  transform-style: preserve-3d;
+}
+
+.carousel-card.active {
+  border-color: rgba(255, 210, 90, 1);
+
+  box-shadow:
+    0 0 18px rgba(255, 210, 90, 0.45),
+    0 0 45px rgba(255, 170, 40, 0.22);
+}
+
+.carousel-card .product-image {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.carousel-card.active .product-image {
+  height: 285px;
+}
+
+.carousel-card .card-title {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.carousel-card.active .card-title {
+  font-size: 24px;
+}
+
+.product-carousel .carousel-arrow {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+
+  border: 1px solid #ffd25a;
+  background: rgba(5, 7, 11, 0.92);
+  color: #ffd25a;
+
+  font-size: 34px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 30;
+
+  transition: 0.3s ease;
+}
+
+.product-carousel .carousel-arrow-left {
+  left: 5px;
+}
+
+.product-carousel .carousel-arrow-right {
+  right: 5px;
+}
+
+.product-carousel .carousel-arrow:hover {
+  background: rgba(255, 190, 70, 0.15);
+  box-shadow:
+    0 0 18px rgba(255, 210, 90, 0.5),
+    0 0 35px rgba(255, 170, 40, 0.25);
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.carousel-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 210, 90, 0.25);
+  cursor: pointer;
+}
+
+.carousel-dot.active {
+  background: #ffd25a;
+  box-shadow: 0 0 12px rgba(255, 210, 90, 0.7);
+}
+
+@media (max-width: 768px) {
+  .carousel-track {
+    height: 470px;
+  }
+
+  .carousel-card {
+    width: 72%;
+    margin-left: -36%;
+    min-height: 410px;
+  }
+
+  .carousel-card .product-image {
+    height: 220px;
+  }
+
+  .carousel-card.active .product-image {
+    height: 240px;
+  }
+
+  .carousel-arrow {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+.service-reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.service-reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.service-image {
+  transition: transform 0.45s ease;
+}
+
+.glow-card:hover .service-image {
+  transform: scale(1.045);
+}
+        
         .service-icon {
   width: 150px;
   height: 150px;
@@ -447,6 +910,13 @@ export default function App() {
         }
 
 .scene-card {
+position: relative;
+overflow: hidden;
+
+transition:
+  transform 0.35s ease,
+  border-color 0.35s ease,
+  box-shadow 0.35s ease;
   min-height: 430px;
   padding: 18px;
   display: flex;
@@ -460,6 +930,208 @@ export default function App() {
       #05070b
     );
 }
+.scene-flip-card {
+  perspective: 1200px;
+  min-height: 0;
+  height: 280px;
+  padding:0;
+  display: block;
+}
+
+.scene-flip-inner {
+  position: relative;
+  width: 100%;
+  min-height: 100px;
+  transition: transform 0.7s ease;
+  transform-style: preserve-3d;
+}
+
+.scene-flip-card:hover .scene-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.scene-flip-front,
+.scene-flip-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.scene-flip-front {
+  background: #07101a;
+  overflow: hidden;
+}
+
+.scene-flip-front .scene-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.scene-flip-front .number,
+.scene-flip-front .scene-title {
+  position: absolute;
+  left: 18px;
+  z-index: 2;
+}
+
+.scene-flip-front .number {
+  bottom: 54px;
+}
+
+.scene-flip-front .scene-title {
+  bottom: 18px;
+  color: white;
+}
+
+.scene-flip-front::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 24%;
+  background: linear-gradient(
+    to top,
+    rgba(5, 7, 11, 0.72),
+    rgba(5, 7, 11, 0)
+  );
+}
+
+.scene-flip-back {
+  transform: rotateY(180deg);
+  padding: 28px;
+  border: 1px solid rgba(255, 210, 90, 0.45);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 190, 70, 0.08),
+      rgba(5, 7, 11, 0.98)
+    );
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.scene-flip-back .number {
+  color: #ffd25a;
+  text-shadow: 0 0 12px rgba(255, 210, 90, 0.55);
+}
+
+.scene-flip-back .scene-title {
+  margin-top: 12px;
+  margin-bottom: 18px;
+}
+
+.scene-flip-back .scene-text {
+  line-height: 1.9;
+}
+.scene-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 210, 90, 0.9);
+  box-shadow:
+    0 14px 35px rgba(0, 0, 0, 0.3),
+    0 0 24px rgba(255, 185, 60, 0.2);
+}
+/* 導入シーン・めくる前の表面を強制修正 */
+.scene-card.scene-flip-card {
+  min-height: 280px !important;
+  height: 280px !important;
+  padding: 0 !important;
+}
+
+.scene-flip-inner {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+.scene-flip-front {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.scene-flip-front .scene-img {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  object-fit: cover !important;
+}
+.stats-section {
+  padding: 80px 0;
+  background: #05070b;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.stat-card {
+  padding: 24px 16px;
+  text-align: center;
+  border: 1px solid rgba(255, 210, 90, 0.35);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 190, 70, 0.06),
+    rgba(255, 255, 255, 0.01)
+  );
+}
+
+.stat-number {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  color: #ffd25a;
+  text-shadow:
+    0 0 12px rgba(255, 210, 90, 0.5),
+    0 0 30px rgba(255, 170, 40, 0.25);
+}
+
+.stat-label {
+  margin-top: 10px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.72);
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-number {
+    font-size: 52px;
+  }
+}
+.scene-card::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 0;
+  height: 2px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 210, 90, 1),
+    transparent
+  );
+
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s ease;
+}
+
+.scene-card:hover::after {
+  transform: scaleX(1);
+}
+
       
           flex-direction: column;
           justify-content: flex-end;
@@ -473,9 +1145,9 @@ export default function App() {
         }
         .scene-img {
         width: 100%;
-        height: 160px;
+        height: 100px;
         object-fit: cover;
-        margin-bottom: 14px;
+        margin-bottom: 0;
         }
         .scene-title {
   font-size: 18px;
@@ -530,6 +1202,71 @@ export default function App() {
             );
         }
 
+        .strength-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  position: relative;
+  overflow: hidden;
+}
+
+.strength-reveal.show {
+  animation: strengthReveal 1.8s ease forwards;
+}
+
+@keyframes strengthReveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.strength-reveal::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 70%;
+  height: 100%;
+  pointer-events: none;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 210, 90, 0.22),
+    rgba(255, 245, 200, 0.4),
+    transparent
+  );
+
+  transform: skewX(-18deg);
+}
+
+.strength-reveal.show::after {
+  animation: strengthScan 0.9s ease forwards;
+  animation-delay: inherit;
+}
+
+@keyframes strengthScan {
+  from {
+    left: -120%;
+  }
+
+  to {
+    left: 140%;
+  }
+}
+
+.strength-reveal.show .strength-num {
+  color: #ffd25a;
+  text-shadow:
+    0 0 10px rgba(255, 210, 90, 0.65),
+    0 0 24px rgba(255, 170, 40, 0.3);
+}
+
         .strength-number {
           font-size: 52px;
           font-weight: 700;
@@ -541,20 +1278,186 @@ export default function App() {
           font-size: 24px;
         }
 
-        .flow-grid {
-          margin-top: 50px;
-          display: grid;
-          grid-template-columns: repeat(3, minmax(0,1fr));
-          gap: 14px;
-        }
+      .flow-grid {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 14px;
+  position: relative;
 
+  background-image: linear-gradient(
+    270deg,
+    transparent,
+    #ffd25a,
+    #ffd25a,
+    transparent
+  );
+  background-repeat: no-repeat;
+  background-size: 68% 2px;
+  background-position: center calc(100% + 14px);
+}  
+
+
+.flow-grid::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 16%;
+  width: 68%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #ffd25a,
+    #ffd25a,
+    transparent
+  );
+  box-shadow: 0 0 14px rgba(255, 210, 90, 0.6);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: flowLine 1.4s ease forwards;
+  z-index: 0;
+}
+.flow-grid::after {
+  content: "";
+  position: absolute;
+  top: -14px;
+  right: -10px;
+  width: 2px;
+  height: calc(100% + 28px);
+  background: linear-gradient(
+    180deg,
+    #ffd25a,
+    #ffd25a
+  );
+  box-shadow: 0 0 14px rgba(255, 210, 90, 0.6);
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: flowDown 0.8s ease forwards;
+  animation-delay: 1.4s;
+  z-index: 0;
+}
+
+@keyframes flowDown {
+  from {
+    transform: scaleY(0);
+  }
+.flow-bottom-line {
+  position: absolute;
+  bottom: -14px;
+  right: 16%;
+  width: 68%;
+  height: 2px;
+  background: linear-gradient(
+    270deg,
+    transparent,
+    #ffd25a,
+    #ffd25a,
+    transparent
+  );
+  box-shadow: 0 0 14px rgba(255, 210, 90, 0.6);
+  transform: scaleX(0);
+  transform-origin: right;
+  animation: flowBottom 1.4s ease forwards;
+  animation-delay: 2.2s;
+  z-index: 0;
+}
+
+@keyframes flowBottom {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes flowLine {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
         .flow-card {
           min-height: 130px;
           padding: 24px;
           border: 1px solid rgba(0,255,231,.14);
           background: rgba(255,255,255,.015);
         }
+.flow-step-card {
+  position: relative;
+  overflow: hidden;
+  opacity: 0.45;
+  transform: translateY(18px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
 
+.flow-step-card.flow-show {
+  animation: flowStepGlow 0.8s ease forwards;
+}
+
+.flow-step-card.flow-show::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 70%;
+  height: 100%;
+  pointer-events: none;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 210, 90, 0.15),
+    rgba(255, 235, 160, 0.55),
+    transparent
+  );
+
+  transform: skewX(-18deg);
+  animation: flowLight 3s ease forwards;
+  animation-delay: inherit;
+}
+
+@keyframes flowStepGlow {
+  0% {
+    opacity: 0.45;
+    transform: translateY(18px);
+  }
+
+  60% {
+    opacity: 1;
+    border-color: rgba(255, 210, 90, 0.95);
+    box-shadow: 0 0 28px rgba(255, 190, 60, 0.35);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    border-color: rgba(255, 210, 90, 0.45);
+  }
+}
+
+@keyframes flowLight {
+  from {
+    left: -120%;
+  }
+
+  to {
+    left: 140%;
+  }
+}
         .flow-title {
           margin-top: 18px;
           font-size: 17px;
@@ -576,6 +1479,12 @@ export default function App() {
           padding: 21px 0;
           border-bottom: 1px solid rgba(255,255,255,.08);
         }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
         .company-label {
           color: #00ffe7;
@@ -734,7 +1643,7 @@ export default function App() {
           }
 
           .scene-grid {
-            grid-template-columns: repeat(2, minmax(0,1fr));
+            grid-template-columns: repeat(4, minmax(0,1fr));
           }
 
           .flow-grid {
@@ -742,7 +1651,12 @@ export default function App() {
           }
         }
 
-        @media (max-width: 820px) {
+        @media (max-width: 9999px) {
+        .hero {
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: 16 / 9;
+}
         
 .contact-desktop {
 display: none;
@@ -819,6 +1733,10 @@ display: none;
           .header {
             height: 68px;
             padding: 0 18px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
           }
 
           .desktop-nav {
@@ -834,8 +1752,9 @@ display: none;
           .mobile-menu {
             position: fixed;
             top: 68px;
-            left: 0;
+            
             right: 0;
+            width: 360px;
             z-index: 999;
             display: flex;
             flex-direction: column;
@@ -843,6 +1762,8 @@ display: none;
             background: rgba(3,7,13,.97);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(0,255,231,.15);
+            max-height: calc(100vh - 68px);
+            overflow-y: auto;
           }
 
           .mobile-nav-button {
@@ -860,7 +1781,6 @@ display: none;
           .mobile-language {
             display: flex;
             gap: 10px;
-            padding-top: 15px;
           }
 
           .logo-image {
@@ -895,11 +1815,11 @@ display: none;
 
           .cards,
           .flow-grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: repart(3, minmax(0,11fr));
           }
 
           .scene-grid {
-            grid-template-columns: repeat(2, minmax(0,1fr));
+            grid-template-columns: repeat(4, minmax(0,1fr));
           }
 
           .company-box {
@@ -980,7 +1900,134 @@ display: none;
           .secondary-button {
             width: 100%;
           }
-      `} </style>
+.business-link-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 0.45s ease,
+    box-shadow 0.45s ease,
+    border-color 0.45s ease;
+}
+
+.business-link-card:hover {
+  transform: translateY(-10px) scale(1.025);
+  border-color: rgba(255, 210, 90, 0.8);
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.38),
+    0 0 28px rgba(255, 190, 60, 0.18);
+}
+
+.business-link-card::after {
+  content: "";
+  position: absolute;
+  top: -45%;
+  left: -90%;
+  width: 45%;
+  height: 190%;
+  pointer-events: none;
+  z-index: 5;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 210, 90, 0.18),
+    rgba(255, 245, 190, 1),
+    rgba(255, 190, 60, 0.5),
+    transparent
+  );
+
+  filter: blur(2px);
+  transform: rotate(24deg);
+  transition: left 0.75s ease;
+}
+
+.business-link-card:hover::after {
+  left: 145%;
+}
+
+.business-link-card:hover::after {
+  left: 140%;
+}
+
+.business-view-site {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 12px 20px;
+  width: fit-content;
+  border: 1px solid rgba(255, 210, 90, 0.65);
+  background: rgba(5, 7, 11, 0.8);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.business-link-card:hover .business-view-site {
+  opacity: 1;
+  transform: translateY(0);
+  box-shadow: 0 0 18px rgba(255, 190, 60, 0.28);
+}
+          
+     
+      a.business-link-card .business-view-site {
+  opacity: 0 !important;
+  transform: translateY(18px) !important;
+  pointer-events: none;
+}
+
+a.business-link-card:hover .business-view-site {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  pointer-events: auto;
+}
+
+  .philosophy-item {
+  opacity: 0;
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.philosophy-left {
+  transform: translateX(-50px);
+}
+
+.philosophy-right {
+  transform: translateX(50px);
+  transition-delay: 0.25s;
+}
+.philosophy-item.show {
+opacity: 1;
+transform: translateX(0);
+}
+
+.philosophy-content::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  margin-top: 34px;
+  background: linear-gradient(
+    90deg,
+    #ffd25a,
+    rgba(255, 210, 90, 0.15)
+  );
+  transition: width 1s ease 0.55s;
+}
+
+#philosophy:has(.philosophy-item.show) .philosophy-content::after {
+  width: 100%;
+}
+
+     `} </style>
 
       <div className="osr-page">
         {/* HEADER */}
@@ -1020,6 +2067,7 @@ display: none;
             <ナビボタン text={文言.nav.flow} onClick={() => 移動("flow")} />
             <ナビボタン text={文言.nav.business} onClick={() => 移動("business")} />
             <ナビボタン text={文言.nav.news} onClick={() => 移動("news")} />
+            <ナビボタン text={文言.nav.blog} onClick={() => 移動("blog")} />
             <ナビボタン text={文言.nav.philosophy} onClick={() => 移動("philosophy")} />
             <ナビボタン text={文言.nav.company} onClick={() => 移動("company")} />
 
@@ -1039,6 +2087,12 @@ display: none;
             </div>
           </nav>
 
+          <div className="mobile-language">
+              <言語ボタン label="JP" active={言語 === "ja"} onClick={() => 言語を変更("ja")} />
+              <言語ボタン label="EN" active={言語 === "en"} onClick={() => 言語を変更("en")} />
+              <言語ボタン label="中文" active={言語 === "zh"} onClick={() => 言語を変更("zh")} />
+              <言語ボタン label="VI" active={言語 === "vi"} onClick={() => 言語を変更("vi")} />
+            </div>
           <button
             type="button"
             className="mobile-menu-button"
@@ -1056,6 +2110,10 @@ display: none;
               ["products", 文言.nav.products],
               ["strength", 文言.nav.strength],
               ["flow", 文言.nav.flow],
+            ["business", 文言.nav.business],
+            ["news", 文言.nav.news],
+             ["blog-all", 文言.nav.blog],
+            ["philosophy", 文言.nav.philosophy],
               ["company", 文言.nav.company],
               ["contact", 文言.nav.contact],
             ].map(([id, text]) => (
@@ -1069,12 +2127,7 @@ display: none;
               </button>
             ))}
 
-            <div className="mobile-language">
-              <言語ボタン label="JP" active={言語 === "ja"} onClick={() => 言語を変更("ja")} />
-              <言語ボタン label="EN" active={言語 === "en"} onClick={() => 言語を変更("en")} />
-              <言語ボタン label="中文" active={言語 === "zh"} onClick={() => 言語を変更("zh")} />
-              <言語ボタン label="VI" active={言語 === "vi"} onClick={() => 言語を変更("vi")} />
-            </div>
+            
           </div>
         )}
 
@@ -1088,15 +2141,35 @@ display: none;
             overflow: "hidden",
           }}
           >
-    <video autoPlay muted loop playsInline className="hero-video hero-video-pc">
-  <source src={動画URL} type="video/mp4" />
+    <video 
+      autoPlay 
+      muted={!soundOn}
+      loop 
+      playsInline
+      className="hero-video hero-video-pc">
+      
+  <source src={pc動画URL} type="video/mp4" />
 </video>
 
       
-   <video autoPlay muted loop playsInline className="hero-video hero-video-mobile">
-  <source src={スマホ動画URL} />
+   <video
+     autoPlay
+     muted={!soundOn}
+     loop 
+     playsInline
+     preload="auto"
+     className="hero-video hero-video-mobile">
+     
+  <source src={mobile動画URL}　type="video/mp4" />
 </video>
-
+<button
+  className="sound-button"
+  onClick={() => setSoundOn(!soundOn)}
+>
+  {soundOn ? "🔇 SOUND OFF" : "🔊 SOUND ON"}
+</button>
+          
+          
           <div className="hero-overlay" />
           <div className="hero-grid" />
 
@@ -1116,7 +2189,12 @@ display: none;
 
     <div className="cards">
       {文言.service.items.map((item, index) => (
-        <div className="glow-card" key={index}>
+<div
+  className={"glow-card service-reveal " + (serviceVisible ? "show" : "")}
+  key={index}
+  style={{ animationDelay: String(index * 0.12) + "s" }}
+>
+        
           <img
             src={サービス画像[index]}
             alt={item.title}
@@ -1151,25 +2229,43 @@ display: none;
 
     <div className="scene-grid">
       {文言.scene.items.map((item, index) => (
-        <div className="scene-card" key={index}>
-          <img
-            src={導入シーン画像[index]}
-            alt={item.title}
-            className="scene-img"
-          />
+<div className="scene-card scene-flip-card" key={index}>
+  <div className="scene-flip-inner">
 
-          <div className="number">
-            0{index + 1}
-          </div>
+    <div className="scene-flip-front">
+      <img
+        src={導入シーン画像[index]}
+        alt={item.title}
+        className="scene-img"
+      />
 
-          <div className="scene-title">
-            {item.title}
-          </div>
+      <div className="number">
+        0{index + 1}
+      </div>
 
-          <div className="scene-text">
-            {item.text}
-          </div>
-        </div>
+      <div className="scene-title">
+        {item.title}
+      </div>
+    </div>
+
+    <div className="scene-flip-back">
+      <div className="number">
+        0{index + 1}
+      </div>
+
+      <div className="scene-title">
+        {item.title}
+      </div>
+
+      <div className="scene-text">
+        {item.text}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  
       ))}
     </div>
     
@@ -1185,30 +2281,97 @@ display: none;
               description={文言.products.description}
             />
             
+<section className="stats-section">
+  <div className="inner">
+    <div className="stats-grid">
+
+      <div className="stat-card">
+        <div className="stat-number">{count98}</div>
+        <div className="stat-label">最大対応インチ</div>
+      </div>
+
+      <div className="stat-card">
+        <div className="stat-number">{count6}</div>
+        <div className="stat-label">製品ラインナップ</div>
+      </div>
+
+      <div className="stat-card">
+        <div className="stat-number">{count8}</div>
+        <div className="stat-label">対応サイズ数</div>
+      </div>
+
+    </div>
+  </div>
+</section>
             <p className="product-note">
               ※掲載画像はイメージです。実際の取扱製品・仕様とは異なる場合があります。詳細はお問い合わせください。
             </p>
-            
-          <div className="cards">
-              {文言.products.items.map((item, index) => (
-                <div className="glow-card" key={index}>
-                  <img
-                    src = {製品画像[index]}
-                    alt = {item.title}
-                    className="product-image"
-                    />
+<div className="product-carousel">
 
-                  <h3 className="card-title">
-                    {item.title}
-                  </h3>
 
-                  <p className="card-text">
-                    {item.text}
-                  </p>
-                </div>
-              ))}
-            </div>
+
+
+  <div className="carousel-track">
+    {文言.products.items.map((item, index) => {
+      const total = 文言.products.items.length;
+
+      let diff = index - productIndex;
+
+      if (diff > total / 2) diff -= total;
+      if (diff < -total / 2) diff += total;
+
+      return (
+
+<div
+  key={index}
+  className={"carousel-card " + (diff === 0 ? "active" : "")}
+  onClick={() => setProductIndex(index)}
+  style={{
+    transform:
+      "translateX(" + diff * 72 + "%) " +
+      "scale(" + (diff === 0 ? 1 : Math.abs(diff) === 1 ? 0.84 : 0.72) + ") " +
+      "rotateY(" + diff * -8 + "deg)",
+    opacity: Math.abs(diff) > 2 ? 0 : 1,
+    zIndex: 10 - Math.abs(diff),
+  }}
+>
+          <img
+            src={製品画像[index]}
+            alt={item.title}
+            className="product-image"
+          />
+
+          <h3 className="card-title">
+            {item.title}
+          </h3>
+
+          <p className="card-text">
+            {item.text}
+          </p>
+        </div>
+      );
+    })}
+  </div>
+
+
+    ›
+  
+
+  <div className="carousel-dots">
+    {文言.products.items.map((_, index) => (
+      <button
+        key={index}
+        type="button"
+       className={"carousel-dot " + (index === productIndex ? "active" : "")}
+         
+        onClick={() => setProductIndex(index)}
+      />
+    ))}
+  </div>
+
+</div>
           </div>
+          
         </section>
 
         {/* OSRの強み */}
@@ -1222,7 +2385,14 @@ display: none;
 
             <div className="strength-grid">
               {文言.strength.items.map((item, index) => (
-                <div className="strength-card" key={index}>
+
+  <div
+className={"strength-card strength-reveal " + (strengthVisible ? "show" : "")}
+  
+  key={index}
+style={{ animationDelay: String(index * 0.5) + "s" }}
+  
+>
                   <div className="strength-number">
                     0{index + 1}
                   </div>
@@ -1240,6 +2410,20 @@ display: none;
           </div>
         </section>
 
+        {/* SIGNAGE MARQUEE */}
+<div className="signage-marquee">
+  <div className="signage-marquee-track">
+    <span>
+      DIGITAL SIGNAGE — LED VISION — CONTENT — INSTALLATION — OPERATION — SUPPORT —
+    </span>
+    <span>
+      DIGITAL SIGNAGE — LED VISION — CONTENT — INSTALLATION — OPERATION — SUPPORT —
+    </span>
+    <span>
+      DIGITAL SIGNAGE — LED VISION — CONTENT — INSTALLATION — OPERATION — SUPPORT —
+    </span>
+  </div>
+</div>
         {/* 導入フロー */}
         <section id="flow" className="section-alt">
           <div className="inner">
@@ -1250,8 +2434,20 @@ display: none;
             />
 
             <div className="flow-grid">
+
               {文言.flow.items.map((item, index) => (
-                <div className="flow-card" key={index}>
+                <div 
+className={"flow-card flow-step-card " + (flowVisible ? "flow-show" : "")}
+                 
+                  key={index}
+style={{ animationDelay: String(index * 1.0) + "s" }}
+                 
+                    >
+                  <img
+  src={導入フロー画像[index]}
+  alt={item.title}
+  className="flow-image"
+/>
                   <div className="number">
                     STEP {String(index + 1).padStart(2, "0")}
                   </div>
@@ -1296,7 +2492,7 @@ display: none;
         <p>
           原状回復・内装工事・リフォームなど、幅広いご要望に対応します。
         </p>
-        <span>リフォームHPを見る →</span>
+        <span className="business-view-site">VIEW SITE ➡</span>
       </a>
 
       <a
@@ -1315,7 +2511,7 @@ display: none;
         <p>
           重量物の搬入・据付・移設など、確かな技術と施工力で対応します。
         </p>
-        <span>重量鳶HPを見る →</span>
+        <span className="business-view-site">VIEW SITE ➡</span>
       </a>
     </div>
   </div>
@@ -1330,7 +2526,58 @@ display: none;
       description="株式会社OSRからのお知らせをご案内します。"
     />
 <div className="news-list">
-
+   <a
+    href="https://note.com/chousentairiku/n/nc8320c0a11f5"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="news-item"
+  >
+    <span className="news-date">2026.09.22</span>
+    <span className="news-category">INTERVIEW</span>
+    <span className="news-title">
+      「挑戦大陸」に代表取締役 大崎純のインタビュー記事が掲載されました。
+    </span>
+    <span className="news-arrow">→</span>
+  </a>
+   <a
+    href="https://nozokuru.jp/osr-jun-osaki/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="news-item"
+  >
+    <span className="news-date">2026.09.07</span>
+    <span className="news-category">INTERVIEW</span>
+    <span className="news-title">
+      「ノゾクル」に代表取締役 大崎純のインタビュー記事が掲載されました。
+    </span>
+    <span className="news-arrow">→</span>
+  </a>
+   <a
+    href="https://note.com/shacho_homon/n/nd013a4dfb362?sub_rt=share_b&utm_source=chatgpt.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="news-item"
+  >
+    <span className="news-date">2026.09.02</span>
+    <span className="news-category">INTERVIEW</span>
+    <span className="news-title">
+      「社長訪問」に代表取締役 大崎純のインタビュー記事が掲載されました。
+    </span>
+    <span className="news-arrow">→</span>
+  </a>
+ <a
+    href="https://kensetsu-engine-media.jp/interview/660770853"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="news-item"
+  >
+    <span className="news-date">2026.08.31</span>
+    <span className="news-category">INTERVIEW</span>
+    <span className="news-title">
+      「建設円陣PLUS」に代表取締役 大崎純のインタビュー記事が掲載されました。
+    </span>
+    <span className="news-arrow">→</span>
+  </a>
   <a
     href="https://youtu.be/FiPLOYbRcco?si=MlwXQ4YDngu1oWgH"
     target="_blank"
@@ -1377,8 +2624,56 @@ display: none;
   </div>
 </section>
 
+  {/* ブログ */}
+
+<section id="blog-all" className="section blog-all-section">
+  <div className="inner">
+    <見出し
+      en="ALL BLOG"
+      title="ブログ一覧"
+      description="株式会社OSRの最新情報をご覧いただけます。"
+    />
+    <div className="blog-list">
+  {blogs.slice(0, showAllBlogs ? blog.length : 6).map((blog) => (
+    <article className="blog-card" key={blog.id}>
+      {blog.eyecatch && (
+        <img
+          src={blog.eyecatch.url}
+          alt={blog.title}
+          className="blog-eyecatch"
+        />
+      )}
+
+      <div className="blog-meta">
+        <span className="blog-date">
+          {blog.date ? new Date(blog.date).toLocaleDateString("ja-JP") : ""}
+        </span>
+        <span className="blog-category">
+          {blog.category?.name || ""}
+        </span>
+      </div>
+
+      <h3 className="blog-title">{blog.title}</h3>
+
+      <p className="blog-text">
+        {blog.summary || ""}
+      </p>
+    </article>
+  ))}
+</div>
+  {blogs.length > 6 && !showAllBlogs && (
+  <button
+    className="blog-more-button"
+    onClick={() => setShowAllBlogs(true)}
+  >
+    もっと見る
+  </button>
+)}  
+  </div>
+</section>
+        
 {/* 企業理念・使命 */}
-<section id="philosophy" className="section section-alt">
+<section id="philosophy" className="section section-alt philosophy-section">
   <div className="inner">
     <見出し
       en="PHILOSOPHY"
@@ -1387,16 +2682,21 @@ display: none;
     />
 
     <div className="philosophy-content">
-      <h3>企業理念</h3>
-      <p>
-        熱情と知恵で生む挑戦により、新たな価値豊かな暮らしを創造する。
-      </p>
 
-      <h3>使命</h3>
-      <p>
-        熱情を力に、知恵を技術に、挑戦を価値に。
-        期待を超える仕事で、人と社会の未来をつくる。
-      </p>
+      <div className={"philosophy-item philosophy-left " + (philosophyVisible ? "show" : "")}>
+        <h3>企業理念</h3>
+        <p>
+          熱情と知恵で生む挑戦により、新たな価値豊かな暮らしを創造する。
+        </p>
+      </div>
+
+      <div className={"philosophy-item philosophy-right " + (philosophyVisible ? "show" : "")}>
+        <h3>使命</h3>
+        <p>
+          熱情を力に、知恵を技術に、挑戦を価値に。期待を超える仕事で、人と社会の未来をつくる。
+        </p>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1449,9 +2749,14 @@ display: none;
     if (response.ok) {
       form.reset();
       window.location.href = "/";
-    } else {
-      alert("送信に失敗しました。もう一度お試しください。");
-    }
+
+
+     } else {
+  const errorText = await response.text();
+  console.error("Formspree error:", response.status, errorText);
+  alert(`送信エラー: ${response.status}\n${errorText}`);
+  setSubmitError(true);
+} 
   }}
 >
 
@@ -1470,10 +2775,17 @@ display: none;
 />
               
 
-              <button type="submit" className="submit-button">
-                {文言.contact.submit}
-              </button>
-            </form>
+ <button type="submit" className="submit-button">
+  {文言.contact.submit}
+</button>
+
+{submitError && (
+  <div className="form-error">
+    送信できませんでした。通信状況をご確認のうえ、もう一度お試しください。
+  </div>
+)}
+
+</form>
           </div>
         </section>
 
@@ -1637,6 +2949,7 @@ const 翻訳 = {
       flow: "導入フロー",
       business:"事業紹介",
       news:"お知らせ",
+      blog:"ブログ",
       philosophy:"企業理念・使命",
       company: "会社概要",
       contact: "お問い合わせ",
@@ -1704,7 +3017,7 @@ const 翻訳 = {
         },
         {
           title: "商業施設",
-          text:"フロア案内や店舗情報、イベント・キャンペーン告知・広告配信など、施設のさまざまな情報発信に活用できます。大型ディスプレイやLEDビジョンによる空間演出にも対応します。"
+          text:"フロア案内や店舗情報、イベント・キャンペーン告知・広告配信など、施設内のさまざまな情報発信に活用できます。大型ディスプレイやLEDビジョンによる空間演出にも対応します。"
         },
         {
           title:"オフィス",
@@ -1842,7 +3155,7 @@ const 翻訳 = {
       businessValue:
         "重量物搬入・据付工事/リフォーム事業/デジタルサイネージ事業",
       constructionPermit:"建設業許可",
-      constructionPermitValue:"埼玉県知事許可(般-8)第79355号",
+      constructionPermitValue:"埼玉県知事許可(般-8)第79625号",
       licenseBusiness:"許可業種",
       licenseBusinessValue:"とび・土工工事業/解体工事業",
     },
@@ -1869,8 +3182,10 @@ const 翻訳 = {
       products: "Products",
       strength: "Why OSR",
       flow: "Process",
+      business: "Business",
       news: "News",
-　　　philosophy: "Philosophy & Mission",
+      blog: "Blog",
+      philosophy: "Philosophy & Mission",
       company: "Company",
       contact: "Contact",
     },
@@ -1927,14 +3242,14 @@ const 翻訳 = {
       description:
         "Digital signage can be used across retail stores, commercial facilities, events and outdoor advertising.",
       items: [
-        "Retail",
-        "Restaurants",
-        "Commercial Facilities",
-        "Offices",
-        "Hotels",
-        "Events",
-        "Showrooms",
-        "Outdoor Advertising",
+        { title: "Retail", text: "Promote products and services, and announce campaigns at store fronts and interiors." },
+        { title: "Restaurants", text: "Share menus, recommended dishes, campaign and event info through photos and videos." },
+        { title: "Commercial Facilities", text: "Floor maps, store information, event announcements, and advertising for large facilities." },
+        { title: "Offices", text: "Reception guidance, company news, internal communications and corporate PR." },
+        { title: "Hotels", text: "Facility guides, restaurant and event information for hotel guests and lobby displays." },
+        { title: "Events", text: "Venue guides, schedules, product PR and visual productions for events and exhibitions." },
+        { title: "Showrooms", text: "Convey product features and brand identity through video across large and multi-screen displays." },
+        { title: "Outdoor Advertising", text: "High-brightness displays for storefront, building exterior and commercial outdoor advertising." },
       ],
     },
 
@@ -2009,12 +3324,12 @@ const 翻訳 = {
       description:
         "We support your project from the initial inquiry through installation and operation.",
       items: [
-        "Inquiry",
-        "Consultation",
-        "Site Survey",
-        "Proposal & Quotation",
-        "Installation",
-        "Operation & After-Sales Support",
+        { title: "Inquiry", text: "Contact us by phone, LINE, or the inquiry form with your installation location, intended use, and requirements." },
+        { title: "Consultation", text: "We gather details about your installation site, use case, budget, desired size, content, and operation preferences." },
+        { title: "Site Survey", text: "We visit the site to confirm installation space, power, network, wall conditions, and delivery access." },
+        { title: "Proposal & Quotation", text: "Based on the survey, we recommend display type, size, installation method, and delivery system with a detailed quote." },
+        { title: "Installation", text: "We handle delivery, mounting, wiring, and display testing with the reliability of an experienced construction team." },
+        { title: "Operation & After-Sales Support", text: "After installation we confirm display content and settings, then provide ongoing support for content updates and scheduling." },
       ],
     },
 
@@ -2031,6 +3346,10 @@ const 翻訳 = {
       business: "Business",
       businessValue:
         "Heavy lifting, renovation and digital signage",
+      constructionPermit: "Construction Permit",
+      constructionPermitValue: "Saitama Governor Permit (gen-8) No.79625",
+      licenseBusiness: "Licensed Work",
+      licenseBusinessValue: "Scaffolding & earthwork / Demolition",
     },
 
     contact: {
@@ -2055,8 +3374,10 @@ const 翻訳 = {
       products: "产品",
       strength: "OSR优势",
       flow: "导入流程",
+      business: "业务介绍",
       news: "新闻",
-　　　　philosophy: "企业理念・使命",
+      blog: "博客",
+      philosophy: "企业理念・使命",
       company: "公司简介",
       contact: "联系我们",
     },
@@ -2113,14 +3434,14 @@ const 翻訳 = {
       description:
         "适用于门店、商业设施、办公空间、活动场馆及户外广告等多种场景。",
       items: [
-        "零售门店",
-        "餐饮店",
-        "商业设施",
-        "办公室",
-        "酒店",
-        "活动会场",
-        "展厅",
-        "户外广告",
+        { title: "零售门店", text: "在店头及店内高效发布商品・服务宣传及活动信息。" },
+        { title: "餐饮店", text: "通过图片和视频直观展示菜单、推荐商品及活动信息。" },
+        { title: "商业设施", text: "楼层导览、店铺信息、活动公告及广告投放，适用于大型设施。" },
+        { title: "办公室", text: "接待引导、公司公告、内部沟通及企业形象宣传。" },
+        { title: "酒店", text: "为住宿客人提供设施指南、餐厅及活动信息，并可用于大堂空间演出。" },
+        { title: "活动会场", text: "场馆导览、日程安排、商品宣传及活动影像演出。" },
+        { title: "展厅", text: "通过视频清晰传达商品特点及品牌世界观，适用于大屏及多屏展示。" },
+        { title: "户外广告", text: "适用于店面前、建筑外墙等户外环境的高亮度显示器广告投放。" },
       ],
     },
 
@@ -2195,12 +3516,12 @@ const 翻訳 = {
       description:
         "从咨询到正式运营，全程为客户提供清晰完善的支持。",
       items: [
-        "联系我们",
-        "需求沟通",
-        "现场勘察",
-        "方案及报价",
-        "安装施工",
-        "正式运营及售后支持",
+        { title: "联系我们", text: "请通过电话、LINE或咨询表格告知我们您的安装地点、用途及需求。" },
+        { title: "需求沟通", text: "我们将详细了解您的安装场所、用途、预算、尺寸需求及运营方式。" },
+        { title: "现场勘察", text: "如有需要，我们将前往现场确认安装空间、电源、网络及墙面条件。" },
+        { title: "方案及报价", text: "根据沟通与勘察结果，推荐显示器类型、尺寸、安装方式，并提供详细报价。" },
+        { title: "安装施工", text: "包括设备搬运、安装、布线及显示调试，依托丰富的施工经验确保安全。" },
+        { title: "正式运营及售后支持", text: "安装完成后确认显示内容及设置，并持续提供内容更新和运营支持。" },
       ],
     },
 
@@ -2217,6 +3538,10 @@ const 翻訳 = {
       business: "业务内容",
       businessValue:
         "重型设备搬运安装、装修、数字标牌业务",
+      constructionPermit: "建设业许可",
+      constructionPermitValue: "埼玉县知事许可(般-8)第79625号",
+      licenseBusiness: "许可业种",
+      licenseBusinessValue: "脚手架·土工工程/拆除工程",
     },
 
     contact: {
@@ -2241,9 +3566,10 @@ const 翻訳 = {
       products: "Sản phẩm",
       strength: "Thế mạnh OSR",
       flow: "Quy trình",
+      business: "Giới thiệu",
       news: "Tin tức",
-philosophy: "Triết lý & Sứ mệnh",
-
+      blog: "Blog",
+      philosophy: "Triết lý & Sứ mệnh",
       company: "Công ty",
       contact: "Liên hệ",
     },
@@ -2300,14 +3626,14 @@ philosophy: "Triết lý & Sứ mệnh",
       description:
         "Phù hợp với cửa hàng, trung tâm thương mại, văn phòng, sự kiện và quảng cáo ngoài trời.",
       items: [
-        "Cửa hàng",
-        "Nhà hàng",
-        "Trung tâm thương mại",
-        "Văn phòng",
-        "Khách sạn",
-        "Sự kiện",
-        "Showroom",
-        "Quảng cáo ngoài trời",
+        { title: "Cửa hàng", text: "Quảng bá sản phẩm, dịch vụ và thông báo khuyến mãi tại cửa hàng." },
+        { title: "Nhà hàng", text: "Giới thiệu menu, món đặc biệt và thông tin sự kiện qua hình ảnh, video." },
+        { title: "Trung tâm thương mại", text: "Sơ đồ tầng, thông tin cửa hàng, thông báo sự kiện và quảng cáo." },
+        { title: "Văn phòng", text: "Hướng dẫn lễ tân, thông báo nội bộ và truyền thông doanh nghiệp." },
+        { title: "Khách sạn", text: "Thông tin tiện ích, nhà hàng và sự kiện cho khách lưu trú, trình diễn sảnh." },
+        { title: "Sự kiện", text: "Hướng dẫn địa điểm, lịch trình, quảng bá sản phẩm và trình diễn hình ảnh." },
+        { title: "Showroom", text: "Truyền tải đặc điểm sản phẩm và bản sắc thương hiệu qua màn hình lớn." },
+        { title: "Quảng cáo ngoài trời", text: "Màn hình độ sáng cao cho quảng cáo mặt tiền cửa hàng và tòa nhà ngoài trời." },
       ],
     },
 
@@ -2382,12 +3708,12 @@ philosophy: "Triết lý & Sứ mệnh",
       description:
         "OSR hỗ trợ rõ ràng từ khi liên hệ đến khi bắt đầu vận hành.",
       items: [
-        "Liên hệ",
-        "Trao đổi nhu cầu",
-        "Khảo sát hiện trường",
-        "Đề xuất & Báo giá",
-        "Lắp đặt & Thi công",
-        "Vận hành & Hỗ trợ sau bán hàng",
+        { title: "Liên hệ", text: "Vui lòng liên hệ qua điện thoại, LINE hoặc form để cho chúng tôi biết địa điểm, mục đích và yêu cầu của bạn." },
+        { title: "Trao đổi nhu cầu", text: "Chúng tôi thu thập thông tin về địa điểm, mục đích, ngân sách, kích thước mong muốn và phương thức vận hành." },
+        { title: "Khảo sát hiện trường", text: "Chúng tôi đến hiện trường để xác nhận không gian lắp đặt, điện, mạng, tường và lộ trình vận chuyển." },
+        { title: "Đề xuất & Báo giá", text: "Dựa trên khảo sát, chúng tôi đề xuất loại màn hình, kích thước, phương thức lắp đặt và báo giá chi tiết." },
+        { title: "Lắp đặt & Thi công", text: "Chúng tôi xử lý vận chuyển, lắp đặt, đi dây và kiểm tra hiển thị với đội ngũ thi công giàu kinh nghiệm." },
+        { title: "Vận hành & Hỗ trợ sau bán hàng", text: "Sau lắp đặt, chúng tôi xác nhận nội dung và cài đặt, sau đó hỗ trợ liên tục về cập nhật nội dung và lịch trình." },
       ],
     },
 
@@ -2404,6 +3730,10 @@ philosophy: "Triết lý & Sứ mệnh",
       business: "Lĩnh vực hoạt động",
       businessValue:
         "Thi công thiết bị nặng, cải tạo và digital signage",
+      constructionPermit: "Giấy phép xây dựng",
+      constructionPermitValue: "Giấy phép Thống đốc Saitama (gen-8) số 79625",
+      licenseBusiness: "Ngành được cấp phép",
+      licenseBusinessValue: "Giàn giáo & san lấp / Phá dỡ",
     },
 
     contact: {
