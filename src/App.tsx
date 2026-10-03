@@ -2644,7 +2644,9 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
       }}
     >
   {blogs.slice(0, showAllBlogs ? blog.length : 6).map((blog) => (
-    <article className="blog-card" key={blog.id}>
+    <article className="blog-card" key={blog.id}
+      onClick={() => window.open(blog.url, "_blank")}
+      >
       {blog.eyecatch && (
         <img
           src={blog.eyecatch.url}
