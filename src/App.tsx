@@ -1,64 +1,58 @@
 import renovationImage from "./renovation.png";
-import heavyLiftingImage from "./heavy-lifting.png"
+import heavyLiftingImage from "./heavy-lifting.png";
+import companyLogoImage from "./logo.png";
+import kikakuImage from "./kikaku.png";
+import gentyouImage from "./gentyou.png";
+import hannyuuImage from "./hannyuu.png";
+import sekouImage from "./sekou.png";
+import contentsImage from "./contents.png";
+import unyouImage from "./unyou.png";
+import shopImage from "./shop.png";
+import shoppingmallImage from "./shoppingmall.png";
+import restaurantImage from "./restaurant.png";
+import officeImage from "./office.png";
+import hotelImage from "./hotel.png";
+import eventImage from "./event.png";
+import showroomImage from "./showroom.png";
+import outdoorImage from "./outdoor.png";
+import contactImage from "./contact.png";
+import hearingImage from "./hearing.png";
+import gentityousaImage from "./gentityousa.png";
+import teianImage from "./teian.png";
+import settiImage from "./setti.png";
+import unyoukaishiImage from "./unyoukaishi.png";
+import standImage from "./stand.png";
+import okunaiImage from "./okunai.png";
+import okugaiImage from "./okugai.png";
+import ogataImage from "./ogata.png";
+import ekisyouImage from "./ekisyou.png";
+import kabekakeImage from "./kabekake.png"
+import { useEffect,useState } from "react";
 
-import { useEffect, useState } from "react";
-
-const MICROCMS_URL = "https://osr.microcms.io/api/v1/blogs";
-const MICROCMS_API_KEY = "2rdpntmoIdpoM207ArHKLMWMUx7Bl6aim2O8";
-
-type BlogPost = {
-  id: string;
-  title: string;
-  content?: string;
-  body?: string;
-  eyecatch?: {
-    url: string;
-    width?: number;
-    height?: number;
-  };
-  category?: {
-    id?: string;
-    name?: string;
-    title?: string;
-  };
-  date?: string;
-  summary?: string;
-};
 
 type Language = "ja" | "en" | "zh" | "vi";
 
 export default function App() {
-  const [cmsPosts, setCmsPosts] = useState<BlogPost[]>([]);
-
-useEffect(() => {
-  fetch(MICROCMS_URL, {
-    headers: {
-      "X-MICROCMS-API-KEY": MICROCMS_API_KEY,
-    },
-  })
-    .then((res) => {
-      if (!res.ok) throw new Error("microCMSの取得に失敗しました");
-      return res.json();
-    })
-    .then((data) => {
-      setCmsPosts(data.contents || []);
-      console.log("microCMSの記事:", data.contents);
-    })
-    .catch((error) => {
-      console.error("microCMSエラー:", error);
-      setCmsPosts([]);
-    });
-}, []);
 const [productIndex,setProductIndex] = useState(0);
 const [strengthVisible, setStrengthVisible] = useState(false);
 const [flowVisible, setFlowVisible] = useState(false);
 const [philosophyVisible, setPhilosophyVisible] = useState(false);
+const [companyVisible, setCompanyVisible] = useState(false);
   const [submitError,setSubmitError] = useState(false);
 const [soundOn, setSoundOn] = useState(false);
-  
-const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
-const [page, setPage] = useState<"home" | "blog-detail">("home");
-  useEffect(() => {
+  const [blogs, setBlogs] = useState<any[]>([]);
+  const [showAllBlogs, setShowAllBlogs] = useState(false);
+ useEffect(() => {
+  fetch("https://osr.microcms.io/api/v1/blogs?limit=100", {
+    headers: {
+      "X-MICROCMS-API-KEY": "2rdpntmoIdpoM207ArHKLMWMUx7Bl6aim2O8",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => setBlogs(data.contents))
+    .catch((error) => console.error(error));
+}, []); 
+useEffect(() => {
   const philosophySection = document.querySelector("#philosophy");
 
   if (!philosophySection) return;
@@ -221,44 +215,44 @@ useEffect(() => {
   // ★★★★★ ここだけ差し替えてください ★★★★★
   // ==========================================================
 
-  const pc動画URL = "https://res.cloudinary.com/xnqcsfha/video/upload/v1789719121/%E6%98%A0%E5%83%8F%E3%81%A7%E7%A9%BA%E9%96%93%E3%81%AE%E4%BE%A1%E5%80%A4%E3%82%92%E5%A4%89%E3%81%88%E3%82%8B%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC_32%E7%A7%92.mp4";
-  const mobile動画URL = "https://res.cloudinary.com/xnqcsfha/video/upload/v1789719121/%E6%98%A0%E5%83%8F%E3%81%A7%E7%A9%BA%E9%96%93%E3%81%AE%E4%BE%A1%E5%80%A4%E3%82%92%E5%A4%89%E3%81%88%E3%82%8B%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC_32%E7%A7%92.mp4";
-  const ロゴURL = "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/435229df-1a79-4dc2-82df-ed1318396242";
+  const pc動画URL = "https://fxpswzbkfeoedmvbcmef.supabase.co/storage/v1/object/public/videos/osr-signage-video-32.mp4";
+  const mobile動画URL = "https://fxpswzbkfeoedmvbcmef.supabase.co/storage/v1/object/public/videos/osr-signage-video-32.mp4";
+  const ロゴURL = companyLogoImage
   const LINE_URL = "https://lin.ee/9p0u2gO";
   const TEL_URL = "tel:048-633-4952";
   const サービス画像 = [
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E6%8F%90%E6%A1%88",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E7%8F%BE%E8%AA%BF",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E6%90%AC%E5%85%A5",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E5%8F%96%E4%BB%98",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E5%88%B6%E4%BD%9C",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E9%81%8B%E7%94%A8%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88",
+    kikakuImage,
+    gentyouImage,
+    hannyuuImage,
+    sekouImage,
+    contentsImage,
+    unyouImage,
     ];
   const 製品画像 = [
-    "https://res.cloudinary.com/wngor8ac/image/upload/v1787634659/image111.png",
-    "https://res.cloudinary.com/wngor8ac/image/upload/v1787634669/image112.png",
-    "https://res.cloudinary.com/wngor8ac/image/upload/v1787634745/image113.png",
-    "https://res.cloudinary.com/wngor8ac/image/upload/v1787634767/image115_2.png",
-    "https://res.cloudinary.com/wngor8ac/image/upload/v1787634759/image115_1.png",
-    "https://res.cloudinary.com/wngor8ac/image/upload/v1787634773/image116.png",
+    okunaiImage,
+    okugaiImage,
+    ekisyouImage,
+    standImage,
+    kabekakeImage,
+    ogataImage,
     ];
   const 導入シーン画像 = [
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E5%BA%97%E8%88%97",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E9%A3%B2%E9%A3%9F%E5%BA%97",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E5%95%86%E6%A5%AD%E6%96%BD%E8%A8%AD",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E3%82%AA%E3%83%95%E3%82%A3%E3%82%B9",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%9B%E3%83%86%E3%83%AB",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E3%82%B7%E3%83%A7%E3%83%BC%E3%83%AB%E3%83%BC%E3%83%A0",
-    "https://res.cloudinary.com/wngor8ac/image/upload/f_auto,q_auto/%E3%82%B5%E3%82%A4%E3%83%8D%E3%83%BC%E3%82%B8%E5%B1%8B%E5%A4%96%E5%BA%83%E5%91%8A",
+    shopImage,
+    restaurantImage,
+    shoppingmallImage,
+    officeImage,
+    hotelImage,
+    eventImage,
+    showroomImage,
+    outdoorImage,
     ];
     const 導入フロー画像 = [
-      "https://res.cloudinary.com/wngor8ac/image/upload/v1787631144/image0.png",
-      "https://res.cloudinary.com/wngor8ac/image/upload/v1787631188/image1.png",
-      "https://res.cloudinary.com/wngor8ac/image/upload/v1787631234/image2.png",
-      "https://res.cloudinary.com/wngor8ac/image/upload/v1787631224/image3.png",
-      "https://res.cloudinary.com/wngor8ac/image/upload/v1787631234/image4.png",
-      "https://res.cloudinary.com/wngor8ac/image/upload/v1787631242/image5.png",
+     contactImage,
+      hearingImage,
+      gentityousaImage,
+      teianImage,
+      settiImage,
+      unyoukaishiImage,
       ];
 
   // ==========================================================
@@ -269,103 +263,14 @@ useEffect(() => {
   const 文言 = 翻訳[言語];
 
   const 移動 = (id: string) => {
-    メニュー開閉(false);
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({ behavior: "smooth" });
+  }
+  メニュー開閉(false);
+};
 
-    setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({
-        behavior: "smooth",
-      });
-    }, 50);
-  };
- if (selectedPost) {
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#080808",
-        color: "#ffffff",
-        padding: "60px 24px",
-      }}
-    >
-      <main
-        style={{
-          maxWidth: "900px",
-          margin: "0 auto",
-        }}
-      >
-        <button
-          onClick={() => setSelectedPost(null)}
-          style={{
-            background: "transparent",
-            border: "none",
-            color: "#d4af37",
-            fontSize: "15px",
-            cursor: "pointer",
-            padding: "0",
-            marginBottom: "50px",
-          }}
-        >
-          ← ブログ一覧へ戻る
-        </button>
-
-        <div
-          style={{
-            color: "#d4af37",
-            fontSize: "13px",
-            letterSpacing: "3px",
-            marginBottom: "15px",
-          }}
-        >
-          BLOG
-        </div>
-
-        <h1
-          style={{
-            fontSize: "clamp(28px, 5vw, 48px)",
-            lineHeight: "1.4",
-            marginBottom: "20px",
-          }}
-        >
-          {selectedPost.title}
-        </h1>
-
-        <div
-          style={{
-            width: "60px",
-            height: "2px",
-            background: "#d4af37",
-            marginBottom: "40px",
-          }}
-        />
-
-        {selectedPost.eyecatch?.url && (
-          <img
-            src={selectedPost.eyecatch.url}
-            alt={selectedPost.title}
-            style={{
-              width: "100%",
-              display: "block",
-              marginBottom: "40px",
-            }}
-          />
-        )}
-
-        <div
-          className="blog-detail-content"
-          style={{
-            fontSize: "16px",
-            lineHeight: "2",
-          }}
-          dangerouslySetInnerHTML={{
-            __html: selectedPost.content || selectedPost.body || "",
-          }}
-        />
-      </main>
-    </div>
-  );
-}
-  
- return (
     <>
       <div
   className="mouse-light"
@@ -468,6 +373,7 @@ useEffect(() => {
           padding: 0;
           color: #fff;
           cursor: pointer;
+          margin-right: auto;
         }
 
         .logo-image {
@@ -565,7 +471,7 @@ useEffect(() => {
         }
 
         .mobile-menu-button {
-          display: none;
+          display: block;
           width: 42px;
           height: 42px;
           border: 1px solid rgba(0,255,231,.32);
@@ -702,6 +608,12 @@ useEffect(() => {
               #05070b 100%
             );
         }
+
+        .philosophy-section　{
+        background: #05070b;
+        }
+
+        
 
         .inner {
           width: 100%;
@@ -1731,7 +1643,7 @@ transition:
           }
 
           .scene-grid {
-            grid-template-columns: repeat(2, minmax(0,1fr));
+            grid-template-columns: repeat(4, minmax(0,1fr));
           }
 
           .flow-grid {
@@ -1739,7 +1651,7 @@ transition:
           }
         }
 
-        @media (max-width: 820px) {
+        @media (max-width: 9999px) {
         .hero {
   height: auto !important;
   min-height: 0 !important;
@@ -1821,6 +1733,10 @@ display: none;
           .header {
             height: 68px;
             padding: 0 18px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
           }
 
           .desktop-nav {
@@ -1836,8 +1752,9 @@ display: none;
           .mobile-menu {
             position: fixed;
             top: 68px;
-            left: 0;
+            
             right: 0;
+            width: 360px;
             z-index: 999;
             display: flex;
             flex-direction: column;
@@ -1845,6 +1762,8 @@ display: none;
             background: rgba(3,7,13,.97);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(0,255,231,.15);
+            max-height: calc(100vh - 68px);
+            overflow-y: auto;
           }
 
           .mobile-nav-button {
@@ -1862,7 +1781,6 @@ display: none;
           .mobile-language {
             display: flex;
             gap: 10px;
-            padding-top: 15px;
           }
 
           .logo-image {
@@ -1897,11 +1815,11 @@ display: none;
 
           .cards,
           .flow-grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: repart(3, minmax(0,11fr));
           }
 
           .scene-grid {
-            grid-template-columns: repeat(2, minmax(0,1fr));
+            grid-template-columns: repeat(4, minmax(0,1fr));
           }
 
           .company-box {
@@ -2169,6 +2087,12 @@ transform: translateX(0);
             </div>
           </nav>
 
+          <div className="mobile-language">
+              <言語ボタン label="JP" active={言語 === "ja"} onClick={() => 言語を変更("ja")} />
+              <言語ボタン label="EN" active={言語 === "en"} onClick={() => 言語を変更("en")} />
+              <言語ボタン label="中文" active={言語 === "zh"} onClick={() => 言語を変更("zh")} />
+              <言語ボタン label="VI" active={言語 === "vi"} onClick={() => 言語を変更("vi")} />
+            </div>
           <button
             type="button"
             className="mobile-menu-button"
@@ -2186,6 +2110,10 @@ transform: translateX(0);
               ["products", 文言.nav.products],
               ["strength", 文言.nav.strength],
               ["flow", 文言.nav.flow],
+            ["business", 文言.nav.business],
+            ["news", 文言.nav.news],
+             ["blog-all", 文言.nav.blog],
+            ["philosophy", 文言.nav.philosophy],
               ["company", 文言.nav.company],
               ["contact", 文言.nav.contact],
             ].map(([id, text]) => (
@@ -2199,12 +2127,7 @@ transform: translateX(0);
               </button>
             ))}
 
-            <div className="mobile-language">
-              <言語ボタン label="JP" active={言語 === "ja"} onClick={() => 言語を変更("ja")} />
-              <言語ボタン label="EN" active={言語 === "en"} onClick={() => 言語を変更("en")} />
-              <言語ボタン label="中文" active={言語 === "zh"} onClick={() => 言語を変更("zh")} />
-              <言語ボタン label="VI" active={言語 === "vi"} onClick={() => 言語を変更("vi")} />
-            </div>
+            
           </div>
         )}
 
@@ -2220,7 +2143,7 @@ transform: translateX(0);
           >
     <video 
       autoPlay 
-      muted
+      muted={!soundOn}
       loop 
       playsInline
       className="hero-video hero-video-pc">
@@ -2231,7 +2154,7 @@ transform: translateX(0);
       
    <video
      autoPlay
-     muted
+     muted={!soundOn}
      loop 
      playsInline
      preload="auto"
@@ -2603,63 +2526,58 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
       description="株式会社OSRからのお知らせをご案内します。"
     />
 <div className="news-list">
-<a
-  href="https://note.com/chousentairiku/n/nc8320c0a11f5"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="news-item"
->
-  <span className="news-date">2026.09.07</span>
-  <span className="news-category">MEDIA</span>
-  <span className="news-title">
-    「挑戦大陸」に代表・大崎純のインタビュー記事が掲載されました。
-  </span>
-  <span className="news-arrow">→</span>
-</a>
-<a
-  href="https://na01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fnozokuru.jp%2Fosr-jun-osaki%2F&data=05%7C02%7C%7Ca0a40cba461947bae1bc08df0d4588d9%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C639244264441773512%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=S6YpPvjGE18du5V4F%2FX13ls5uV18L%2B5AYU2Z%2FIP7PqQ%3D&reserved=0"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="news-item"
->
-  <span className="news-date">2026.09.07</span>
-  <span className="news-category">MEDIA</span>
-  <span className="news-title">
-    「NOZOKURU」に代表・大崎純のインタビュー記事が掲載されました。
-  </span>
-  <span className="news-arrow">→</span>
-</a>
-
-<a
-  href="https://na01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fnote.com%2Fshacho_homon%2Fn%2Fnd013a4dfb362%3Fsub_rt%3Dshare_b%26utm_source%3Dchatgpt.com&data=05%7C02%7C%7Ca0a40cba461947bae1bc08df0d4588d9%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C639244264441798817%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=vNiy%2FVX9fcTnYbllJGNe11eTtyT5Yw387D0vOCIPpfY%3D&reserved=0"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="news-item"
->
-  <span className="news-date">2026.09.02</span>
-  <span className="news-category">MEDIA</span>
-  <span className="news-title">
-    「社長訪問」に代表・大崎純のインタビュー記事が掲載されました。
-  </span>
-  <span className="news-arrow">→</span>
-</a>
-
-<a
-  href="https://na01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fkensetsu-engine-media.jp%2Finterview%2F660770853&data=05%7C02%7C%7Ca0a40cba461947bae1bc08df0d4588d9%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C639244264441814797%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=Lnta8d5s9ZrzuPh%2FfWIKlXfulsNHqWSoUY7MJ%2FuRijE%3D&reserved=0"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="news-item"
->
-  <span className="news-date">2026.08.31</span>
-  <span className="news-category">MEDIA</span>
-  <span className="news-title">
-    「建設円陣PLUS」に代表・大崎純のインタビュー記事が掲載されました。
-  </span>
-  <span className="news-arrow">→</span>
-</a>
-
-  
-
+   <a
+    href="https://note.com/chousentairiku/n/nc8320c0a11f5"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="news-item"
+  >
+    <span className="news-date">2026.09.22</span>
+    <span className="news-category">INTERVIEW</span>
+    <span className="news-title">
+      「挑戦大陸」に代表取締役 大崎純のインタビュー記事が掲載されました。
+    </span>
+    <span className="news-arrow">→</span>
+  </a>
+   <a
+    href="https://nozokuru.jp/osr-jun-osaki/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="news-item"
+  >
+    <span className="news-date">2026.09.07</span>
+    <span className="news-category">INTERVIEW</span>
+    <span className="news-title">
+      「ノゾクル」に代表取締役 大崎純のインタビュー記事が掲載されました。
+    </span>
+    <span className="news-arrow">→</span>
+  </a>
+   <a
+    href="https://note.com/shacho_homon/n/nd013a4dfb362?sub_rt=share_b&utm_source=chatgpt.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="news-item"
+  >
+    <span className="news-date">2026.09.02</span>
+    <span className="news-category">INTERVIEW</span>
+    <span className="news-title">
+      「社長訪問」に代表取締役 大崎純のインタビュー記事が掲載されました。
+    </span>
+    <span className="news-arrow">→</span>
+  </a>
+ <a
+    href="https://kensetsu-engine-media.jp/interview/660770853"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="news-item"
+  >
+    <span className="news-date">2026.08.31</span>
+    <span className="news-category">INTERVIEW</span>
+    <span className="news-title">
+      「建設円陣PLUS」に代表取締役 大崎純のインタビュー記事が掲載されました。
+    </span>
+    <span className="news-arrow">→</span>
+  </a>
   <a
     href="https://youtu.be/FiPLOYbRcco?si=MlwXQ4YDngu1oWgH"
     target="_blank"
@@ -2705,94 +2623,57 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
     
   </div>
 </section>
-{/* ブログ */}
-<section id="blog" className="section">
+
+  {/* ブログ */}
+
+<section id="blog-all" className="section blog-all-section">
   <div className="inner">
     <見出し
-      en="BLOG"
-      title="ブログ"
-      description=""
+      en="ALL BLOG"
+      title="ブログ一覧"
+      description="株式会社OSRの最新情報をご覧いただけます。"
     />
+    <div className="blog-list">
+  {blogs.slice(0, showAllBlogs ? blog.length : 6).map((blog) => (
+    <article className="blog-card" key={blog.id}>
+      {blog.eyecatch && (
+        <img
+          src={blog.eyecatch.url}
+          alt={blog.title}
+          className="blog-eyecatch"
+        />
+      )}
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-  {cmsPosts.length === 0 ? (
-    <p>現在、記事を準備中です。</p>
-  ) : (
-    cmsPosts.map((post: any) => {
-      const imageUrl =
-        typeof post.eyecatch === "string"
-          ? post.eyecatch
-          : post.eyecatch?.url || "";
+      <div className="blog-meta">
+        <span className="blog-date">
+          {blog.date ? new Date(blog.date).toLocaleDateString("ja-JP") : ""}
+        </span>
+        <span className="blog-category">
+          {blog.category?.name || ""}
+        </span>
+      </div>
 
-      return (
-        <article
-          key={post.id}
-          className="group cursor-pointer overflow-hidden bg-white"
-          style={{
-            border: "1px solid #E5E5E5",
-            borderRadius: "4px",
-          }}
-          onClick={() => {
-            setSelectedPost(post);
-            setPage("blog-detail");
-            window.scrollTo(0, 0);
-          }}
-        >
-          <div
-            className="overflow-hidden"
-            style={{ aspectRatio: "16/9" }}
-          >
-            {imageUrl && (
-              <img
-                src={imageUrl}
-                alt={post.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            )}
-          </div>
+      <h3 className="blog-title">{blog.title}</h3>
 
-          <div className="p-6">
-            <p
-              className="text-xs mb-4"
-              style={{ color: "#B89748" }}
-            >
-              {post.date
-                ? new Date(post.date).toLocaleDateString("ja-JP")
-                : ""}
-            </p>
-
-            <h2
-              className="text-lg font-bold mb-4 leading-relaxed"
-              style={{ color: "#14263D" }}
-            >
-              {post.title}
-            </h2>
-
-            <p
-              className="text-sm leading-relaxed mb-6"
-              style={{ color: "#777777" }}
-            >
-              {post.summary || ""}
-            </p>
-
-            <span
-              className="text-sm font-medium"
-              style={{ color: "#B89748" }}
-            >
-              続きを読む →
-            </span>
-          </div>
-        </article>
-      );
-    })
-  )}
+      <p className="blog-text">
+        {blog.summary || ""}
+      </p>
+    </article>
+  ))}
 </div>
-    
+  {blogs.length > 6 && !showAllBlogs && (
+  <button
+    className="blog-more-button"
+    onClick={() => setShowAllBlogs(true)}
+  >
+    もっと見る
+  </button>
+)}  
   </div>
 </section>
         
 {/* 企業理念・使命 */}
-<section id="philosophy" className="section section-alt">
+<section id="philosophy" className="section section-alt philosophy-section">
   <div className="inner">
     <見出し
       en="PHILOSOPHY"
@@ -3301,8 +3182,10 @@ const 翻訳 = {
       products: "Products",
       strength: "Why OSR",
       flow: "Process",
+      business: "Business",
       news: "News",
-　　　philosophy: "Philosophy & Mission",
+      blog: "Blog",
+      philosophy: "Philosophy & Mission",
       company: "Company",
       contact: "Contact",
     },
@@ -3359,14 +3242,14 @@ const 翻訳 = {
       description:
         "Digital signage can be used across retail stores, commercial facilities, events and outdoor advertising.",
       items: [
-        "Retail",
-        "Restaurants",
-        "Commercial Facilities",
-        "Offices",
-        "Hotels",
-        "Events",
-        "Showrooms",
-        "Outdoor Advertising",
+        { title: "Retail", text: "Promote products and services, and announce campaigns at store fronts and interiors." },
+        { title: "Restaurants", text: "Share menus, recommended dishes, campaign and event info through photos and videos." },
+        { title: "Commercial Facilities", text: "Floor maps, store information, event announcements, and advertising for large facilities." },
+        { title: "Offices", text: "Reception guidance, company news, internal communications and corporate PR." },
+        { title: "Hotels", text: "Facility guides, restaurant and event information for hotel guests and lobby displays." },
+        { title: "Events", text: "Venue guides, schedules, product PR and visual productions for events and exhibitions." },
+        { title: "Showrooms", text: "Convey product features and brand identity through video across large and multi-screen displays." },
+        { title: "Outdoor Advertising", text: "High-brightness displays for storefront, building exterior and commercial outdoor advertising." },
       ],
     },
 
@@ -3441,12 +3324,12 @@ const 翻訳 = {
       description:
         "We support your project from the initial inquiry through installation and operation.",
       items: [
-        "Inquiry",
-        "Consultation",
-        "Site Survey",
-        "Proposal & Quotation",
-        "Installation",
-        "Operation & After-Sales Support",
+        { title: "Inquiry", text: "Contact us by phone, LINE, or the inquiry form with your installation location, intended use, and requirements." },
+        { title: "Consultation", text: "We gather details about your installation site, use case, budget, desired size, content, and operation preferences." },
+        { title: "Site Survey", text: "We visit the site to confirm installation space, power, network, wall conditions, and delivery access." },
+        { title: "Proposal & Quotation", text: "Based on the survey, we recommend display type, size, installation method, and delivery system with a detailed quote." },
+        { title: "Installation", text: "We handle delivery, mounting, wiring, and display testing with the reliability of an experienced construction team." },
+        { title: "Operation & After-Sales Support", text: "After installation we confirm display content and settings, then provide ongoing support for content updates and scheduling." },
       ],
     },
 
@@ -3463,6 +3346,10 @@ const 翻訳 = {
       business: "Business",
       businessValue:
         "Heavy lifting, renovation and digital signage",
+      constructionPermit: "Construction Permit",
+      constructionPermitValue: "Saitama Governor Permit (gen-8) No.79625",
+      licenseBusiness: "Licensed Work",
+      licenseBusinessValue: "Scaffolding & earthwork / Demolition",
     },
 
     contact: {
@@ -3487,8 +3374,10 @@ const 翻訳 = {
       products: "产品",
       strength: "OSR优势",
       flow: "导入流程",
+      business: "业务介绍",
       news: "新闻",
-　　　　philosophy: "企业理念・使命",
+      blog: "博客",
+      philosophy: "企业理念・使命",
       company: "公司简介",
       contact: "联系我们",
     },
@@ -3545,14 +3434,14 @@ const 翻訳 = {
       description:
         "适用于门店、商业设施、办公空间、活动场馆及户外广告等多种场景。",
       items: [
-        "零售门店",
-        "餐饮店",
-        "商业设施",
-        "办公室",
-        "酒店",
-        "活动会场",
-        "展厅",
-        "户外广告",
+        { title: "零售门店", text: "在店头及店内高效发布商品・服务宣传及活动信息。" },
+        { title: "餐饮店", text: "通过图片和视频直观展示菜单、推荐商品及活动信息。" },
+        { title: "商业设施", text: "楼层导览、店铺信息、活动公告及广告投放，适用于大型设施。" },
+        { title: "办公室", text: "接待引导、公司公告、内部沟通及企业形象宣传。" },
+        { title: "酒店", text: "为住宿客人提供设施指南、餐厅及活动信息，并可用于大堂空间演出。" },
+        { title: "活动会场", text: "场馆导览、日程安排、商品宣传及活动影像演出。" },
+        { title: "展厅", text: "通过视频清晰传达商品特点及品牌世界观，适用于大屏及多屏展示。" },
+        { title: "户外广告", text: "适用于店面前、建筑外墙等户外环境的高亮度显示器广告投放。" },
       ],
     },
 
@@ -3627,12 +3516,12 @@ const 翻訳 = {
       description:
         "从咨询到正式运营，全程为客户提供清晰完善的支持。",
       items: [
-        "联系我们",
-        "需求沟通",
-        "现场勘察",
-        "方案及报价",
-        "安装施工",
-        "正式运营及售后支持",
+        { title: "联系我们", text: "请通过电话、LINE或咨询表格告知我们您的安装地点、用途及需求。" },
+        { title: "需求沟通", text: "我们将详细了解您的安装场所、用途、预算、尺寸需求及运营方式。" },
+        { title: "现场勘察", text: "如有需要，我们将前往现场确认安装空间、电源、网络及墙面条件。" },
+        { title: "方案及报价", text: "根据沟通与勘察结果，推荐显示器类型、尺寸、安装方式，并提供详细报价。" },
+        { title: "安装施工", text: "包括设备搬运、安装、布线及显示调试，依托丰富的施工经验确保安全。" },
+        { title: "正式运营及售后支持", text: "安装完成后确认显示内容及设置，并持续提供内容更新和运营支持。" },
       ],
     },
 
@@ -3649,6 +3538,10 @@ const 翻訳 = {
       business: "业务内容",
       businessValue:
         "重型设备搬运安装、装修、数字标牌业务",
+      constructionPermit: "建设业许可",
+      constructionPermitValue: "埼玉县知事许可(般-8)第79625号",
+      licenseBusiness: "许可业种",
+      licenseBusinessValue: "脚手架·土工工程/拆除工程",
     },
 
     contact: {
@@ -3673,9 +3566,10 @@ const 翻訳 = {
       products: "Sản phẩm",
       strength: "Thế mạnh OSR",
       flow: "Quy trình",
+      business: "Giới thiệu",
       news: "Tin tức",
-philosophy: "Triết lý & Sứ mệnh",
-
+      blog: "Blog",
+      philosophy: "Triết lý & Sứ mệnh",
       company: "Công ty",
       contact: "Liên hệ",
     },
@@ -3732,14 +3626,14 @@ philosophy: "Triết lý & Sứ mệnh",
       description:
         "Phù hợp với cửa hàng, trung tâm thương mại, văn phòng, sự kiện và quảng cáo ngoài trời.",
       items: [
-        "Cửa hàng",
-        "Nhà hàng",
-        "Trung tâm thương mại",
-        "Văn phòng",
-        "Khách sạn",
-        "Sự kiện",
-        "Showroom",
-        "Quảng cáo ngoài trời",
+        { title: "Cửa hàng", text: "Quảng bá sản phẩm, dịch vụ và thông báo khuyến mãi tại cửa hàng." },
+        { title: "Nhà hàng", text: "Giới thiệu menu, món đặc biệt và thông tin sự kiện qua hình ảnh, video." },
+        { title: "Trung tâm thương mại", text: "Sơ đồ tầng, thông tin cửa hàng, thông báo sự kiện và quảng cáo." },
+        { title: "Văn phòng", text: "Hướng dẫn lễ tân, thông báo nội bộ và truyền thông doanh nghiệp." },
+        { title: "Khách sạn", text: "Thông tin tiện ích, nhà hàng và sự kiện cho khách lưu trú, trình diễn sảnh." },
+        { title: "Sự kiện", text: "Hướng dẫn địa điểm, lịch trình, quảng bá sản phẩm và trình diễn hình ảnh." },
+        { title: "Showroom", text: "Truyền tải đặc điểm sản phẩm và bản sắc thương hiệu qua màn hình lớn." },
+        { title: "Quảng cáo ngoài trời", text: "Màn hình độ sáng cao cho quảng cáo mặt tiền cửa hàng và tòa nhà ngoài trời." },
       ],
     },
 
@@ -3814,12 +3708,12 @@ philosophy: "Triết lý & Sứ mệnh",
       description:
         "OSR hỗ trợ rõ ràng từ khi liên hệ đến khi bắt đầu vận hành.",
       items: [
-        "Liên hệ",
-        "Trao đổi nhu cầu",
-        "Khảo sát hiện trường",
-        "Đề xuất & Báo giá",
-        "Lắp đặt & Thi công",
-        "Vận hành & Hỗ trợ sau bán hàng",
+        { title: "Liên hệ", text: "Vui lòng liên hệ qua điện thoại, LINE hoặc form để cho chúng tôi biết địa điểm, mục đích và yêu cầu của bạn." },
+        { title: "Trao đổi nhu cầu", text: "Chúng tôi thu thập thông tin về địa điểm, mục đích, ngân sách, kích thước mong muốn và phương thức vận hành." },
+        { title: "Khảo sát hiện trường", text: "Chúng tôi đến hiện trường để xác nhận không gian lắp đặt, điện, mạng, tường và lộ trình vận chuyển." },
+        { title: "Đề xuất & Báo giá", text: "Dựa trên khảo sát, chúng tôi đề xuất loại màn hình, kích thước, phương thức lắp đặt và báo giá chi tiết." },
+        { title: "Lắp đặt & Thi công", text: "Chúng tôi xử lý vận chuyển, lắp đặt, đi dây và kiểm tra hiển thị với đội ngũ thi công giàu kinh nghiệm." },
+        { title: "Vận hành & Hỗ trợ sau bán hàng", text: "Sau lắp đặt, chúng tôi xác nhận nội dung và cài đặt, sau đó hỗ trợ liên tục về cập nhật nội dung và lịch trình." },
       ],
     },
 
@@ -3836,6 +3730,10 @@ philosophy: "Triết lý & Sứ mệnh",
       business: "Lĩnh vực hoạt động",
       businessValue:
         "Thi công thiết bị nặng, cải tạo và digital signage",
+      constructionPermit: "Giấy phép xây dựng",
+      constructionPermitValue: "Giấy phép Thống đốc Saitama (gen-8) số 79625",
+      licenseBusiness: "Ngành được cấp phép",
+      licenseBusinessValue: "Giàn giáo & san lấp / Phá dỡ",
     },
 
     contact: {
@@ -3853,4 +3751,3 @@ philosophy: "Triết lý & Sứ mệnh",
     line: "Tư vấn qua LINE",
   },
 };
-
