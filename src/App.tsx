@@ -2069,7 +2069,7 @@ transform: translateX(0);
             <ナビボタン text={文言.nav.flow} onClick={() => 移動("flow")} />
             <ナビボタン text={文言.nav.business} onClick={() => 移動("business")} />
             <ナビボタン text={文言.nav.news} onClick={() => 移動("news")} />
-            <ナビボタン text={文言.nav.blog} onClick={() => 移動("blog")} />
+            <ナビボタン text={文言.nav.blog} onClick={() => 移動("blog-all")} />
             <ナビボタン text={文言.nav.philosophy} onClick={() => 移動("philosophy")} />
             <ナビボタン text={文言.nav.company} onClick={() => 移動("company")} />
 
