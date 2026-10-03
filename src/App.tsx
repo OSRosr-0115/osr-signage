@@ -1649,6 +1649,8 @@ transition:
           .flow-grid {
             grid-template-columns: repeat(1, minmax(0,1fr));
           }
+          .blog-list {
+          grid-template-columns: 1fr !important;
         }
 
         @media (max-width: 9999px) {
