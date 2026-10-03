@@ -1101,7 +1101,7 @@ transition:
 
 @media (max-width: 768px) {
   .stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr
   }
 
   .stat-number {
@@ -2633,7 +2633,14 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
       title="ブログ一覧"
       description="株式会社OSRの最新情報をご覧いただけます。"
     />
-    <div className="blog-list">
+    <div
+      className="blog-list"
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+        gap: "28px",
+      }}
+    >
   {blogs.slice(0, showAllBlogs ? blog.length : 6).map((blog) => (
     <article className="blog-card" key={blog.id}>
       {blog.eyecatch && (
