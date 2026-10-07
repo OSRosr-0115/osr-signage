@@ -2150,6 +2150,7 @@ transform: translateX(0);
           >
     <video 
       autoPlay 
+      preload="auto"
       muted={!soundOn}
       loop 
       playsInline
@@ -2161,6 +2162,7 @@ transform: translateX(0);
       
    <video
      autoPlay
+     preload="auto"
      muted={!soundOn}
      loop 
      playsInline
