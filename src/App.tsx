@@ -2673,7 +2673,7 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
     <article 
       className="blog-card"
       key={blog.id}
-      onClick={() => setSelectedBlog（blog)}
+      onClick={() => setSelectedBlog(blog)}
       >
       {blog.eyecatch && (
         <img
