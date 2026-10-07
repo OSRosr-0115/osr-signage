@@ -41,6 +41,7 @@ const [companyVisible, setCompanyVisible] = useState(false);
   const [submitError,setSubmitError] = useState(false);
 const [soundOn, setSoundOn] = useState(false);
   const [blogs, setBlogs] = useState<any[]>([]);
+  const [selectedBlog, setSelectedBlog] = useState<any | null>(null);
   const [showAllBlogs, setShowAllBlogs] = useState(false);
  useEffect(() => {
   fetch("https://osr.microcms.io/api/v1/blogs?limit=100", {
@@ -2635,6 +2636,31 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
       title="ブログ一覧"
       description="株式会社OSRの最新情報をご覧いただけます。"
     />
+  {selectedBlog ? (
+  <div className="blog-detail">
+    <button
+      type="button"
+      onClick={() => setSelectedBlog(null)}
+      className="blog-more-button"
+    >
+      ブログ一覧へ戻る
+    </button>
+
+    <h2>{selectedBlog.title}</h2>
+
+    {selectedBlog.eyecatch && (
+      <img
+        src={selectedBlog.eyecatch.url}
+        alt={selectedBlog.title}
+        className="blog-eyecatch"
+      />
+    )}
+
+    <div
+      dangerouslySetInnerHTML={{ __html: selectedBlog.content }}
+    />
+  </div>
+) : (
     <div
       className="blog-list"
       style={{
@@ -2644,8 +2670,10 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
       }}
     >
   {blogs.slice(0, showAllBlogs ? blog.length : 6).map((blog) => (
-    <article className="blog-card" key={blog.id}
-      onClick={() => window.open(blog.url, "_blank")}
+    <article 
+      className="blog-card"
+      key={blog.id}
+      onClick={() => setSelectedBlog（blog)}
       >
       {blog.eyecatch && (
         <img
@@ -2680,6 +2708,7 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
     もっと見る
   </button>
 )}  
+    )}
   </div>
 </section>
         
