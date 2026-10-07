@@ -840,6 +840,10 @@ useEffect(() => {
     margin-left: -36%;
     min-height: 410px;
   }
+  .section,
+  .section-alt {
+  padding: 40px 5vw;
+  }
 
   .carousel-card .product-image {
     height: 220px;
