@@ -414,7 +414,7 @@ useEffect(() => {
 
 
         .desktop-nav {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 10px;
   flex-wrap: nowrap;
