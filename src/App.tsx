@@ -2661,6 +2661,7 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
     />
   </div>
 ) : (
+  <>
     <div
       className="blog-list"
       style={{
@@ -2708,6 +2709,7 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
     もっと見る
   </button>
 )}  
+  </>
     )}
   </div>
 </section>
