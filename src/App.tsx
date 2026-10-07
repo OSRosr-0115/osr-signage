@@ -482,9 +482,21 @@ useEffect(() => {
           font-size: 22px;
         }
 
-        .mobile-menu {
-          display: none;
-        }
+       .mobile-menu {
+  position: fixed;
+  top: 68px;
+  right: 0;
+  width: 360px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  background: rgba(3,7,13,.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,255,231,.15);
+  max-height: calc(100vh - 68px);
+  overflow-y: auto;
+}
 
         .hero {
           position: relative;
