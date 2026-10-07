@@ -486,7 +486,7 @@ useEffect(() => {
   position: fixed;
   top: 68px;
   right: 0;
-  width: 420px;
+  width: 360px;
   z-index: 999;
   display: flex;
   flex-direction: column;
@@ -496,6 +496,10 @@ useEffect(() => {
   border-bottom: 1px solid rgba(0,255,231,.15);
   max-height: calc(100vh - 68px);
   overflow-y: auto;
+}
+.mobile-nav-button {
+wodth: 100%;
+text-align: left;
 }
 
         .hero {
