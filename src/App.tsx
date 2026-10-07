@@ -486,7 +486,7 @@ useEffect(() => {
   position: fixed;
   top: 68px;
   right: 0;
-  width: 360px;
+  width: 420px;
   z-index: 999;
   display: flex;
   flex-direction: column;
