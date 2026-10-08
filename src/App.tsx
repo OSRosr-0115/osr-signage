@@ -33,6 +33,7 @@ import signageVideo from "./サイネージHP用32秒動画.mp4";
 type Language = "ja" | "en" | "zh" | "vi";
 
 export default function App() {
+  const [showAllNews, setShowAllNews] = useState(false);
 const [productIndex,setProductIndex] = useState(0);
 const [strengthVisible, setStrengthVisible] = useState(false);
 const [flowVisible, setFlowVisible] = useState(false);
@@ -2557,6 +2558,20 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
     rel="noopener noreferrer"
     className="news-item"
   >
+ <span className="news-date">2026.10.05</span>
+    <span className="news-category">INTERVIEW</span>
+    <span className="news-title">
+      「職人BIZサーチ」に代表取締役 大崎純のインタビュー記事が掲載されました。
+    </span>
+    <span className="news-arrow">→</span>
+  </a>
+   <a
+    href="https://syokuninbiz.net/2026/10/02/048-633-4952/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="news-item"
+  >
+     
     <span className="news-date">2026.09.22</span>
     <span className="news-category">INTERVIEW</span>
     <span className="news-title">
@@ -2629,7 +2644,8 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
     </span>
     <span className="news-arrow">→</span>
   </a>
-
+  {showAllNews && (
+  <>
   <button
     type="button"
     onClick={() => 移動("business")}
@@ -2642,7 +2658,18 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
     </span>
     <span className="news-arrow">→</span>
   </button>
-
+  </>
+  )}
+  {!showAllNews && (
+  <div className="text-center mt-8">
+    <button
+      onClick={() => setShowAllNews(true)}
+      className="px-10 py-3 border border-[#c9a227] text-[#c9a227] hover:bg-[#c9a227] hover:text-black transition"
+    >
+      もっと見る
+    </button>
+  </div>
+)}
 </div>
 
     
