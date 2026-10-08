@@ -2744,9 +2744,7 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
 
       <h3 className="blog-title">{blog.title}</h3>
 
-      <p className="blog-text">
-        {blog.summary || ""}
-      </p>
+     
     </article>
   ))}
 </div>
