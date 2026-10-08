@@ -2553,7 +2553,7 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
     />
 <div className="news-list">
    <a
-    href="https://note.com/chousentairiku/n/nc8320c0a11f5"
+    href="https://syokuninbiz.net/2026/10/02/048-633-4952/"
     target="_blank"
     rel="noopener noreferrer"
     className="news-item"
@@ -2566,7 +2566,7 @@ style={{ animationDelay: String(index * 1.0) + "s" }}
     <span className="news-arrow">→</span>
   </a>
    <a
-    href="https://syokuninbiz.net/2026/10/02/048-633-4952/"
+    href="https://note.com/chousentairiku/n/nc8320c0a11f5"
     target="_blank"
     rel="noopener noreferrer"
     className="news-item"
